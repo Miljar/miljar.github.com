@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Miljar - Tom Van Herreweghe]]></title>
-  <link href="http://Miljar.github.io/atom.xml" rel="self"/>
-  <link href="http://Miljar.github.io/"/>
-  <updated>2013-09-11T20:11:23+00:00</updated>
-  <id>http://Miljar.github.io/</id>
+  <link href="http://miljar.github.io/atom.xml" rel="self"/>
+  <link href="http://miljar.github.io/"/>
+  <updated>2013-09-11T20:15:55+00:00</updated>
+  <id>http://miljar.github.io/</id>
   <author>
     <name><![CDATA[Tom Van Herreweghe]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[PHPUnit: Mocking the System Under Test]]></title>
-    <link href="http://Miljar.github.io/blog/2013/09/11/phpunit-mocking-the-system-under-test/"/>
+    <link href="http://miljar.github.io/blog/2013/09/11/phpunit-mocking-the-system-under-test/"/>
     <updated>2013-09-11T17:55:00+00:00</updated>
-    <id>http://Miljar.github.io/blog/2013/09/11/phpunit-mocking-the-system-under-test</id>
+    <id>http://miljar.github.io/blog/2013/09/11/phpunit-mocking-the-system-under-test</id>
     <content type="html"><![CDATA[<p>When unit testing a class, at one point you&rsquo;ll have to check if some functionality in a dependency is triggered. Usually this is done by replacing the dependency with a mock object. A well designed system let&rsquo;s you inject dependencies in your objects, thus allowing for easier unit testing.</p>
 
 <div><script src='https://gist.github.com/6527929.js'></script>
