@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Blog Archive - Miljar - Tom Van Herreweghe</title>
+  <title>PHPUnit: Mocking the System Under Test - Miljar - Tom Van Herreweghe</title>
   <meta name="author" content="Tom Van Herreweghe">
 
   
-  <meta name="description" content="Blog Archive 2013 PHPUnit: Mocking the System Under Test
-Sep 11 2013 Recent Posts PHPUnit: Mocking the System Under Test GitHub Repos Status &hellip;">
+  <meta name="description" content="PHPUnit: Mocking the System Under Test When unit testing a class, at one point you&rsquo;ll have to check if some functionality in a dependency is &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ Sep 11 2013 Recent Posts PHPUnit: Mocking the System Under Test GitHub Repos Sta
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://Miljar.github.io/blog/archives">
+  <link rel="canonical" href="http://Miljar.github.io/blog/2013/09/11/phpunit-mocking-the-system-under-test">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Miljar - Tom Van Herreweghe" type="application/atom+xml">
@@ -65,31 +64,106 @@ Sep 11 2013 Recent Posts PHPUnit: Mocking the System Under Test GitHub Repos Sta
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Blog Archive</h1>
+    
+      <h1 class="entry-title">PHPUnit: Mocking the System Under Test</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-11T17:55:00+00:00" pubdate data-updated="true">11 September 2013 17:55:00</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives">
 
 
+<div class="entry-content"><h1>PHPUnit: Mocking the System Under Test</h1>
 
-  
-  <h2>2013</h2>
+<p>When unit testing a class, at one point you&rsquo;ll have to check if some functionality in a dependency is triggered. Usually this is done by replacing the dependency with a mock object. A well designed system let&rsquo;s you inject dependencies in your objects, thus allowing for easier unit testing.</p>
 
-<article>
-  
-<h1><a href="/blog/2013/09/11/phpunit-mocking-the-system-under-test/">PHPUnit: Mocking the System Under Test</a></h1>
-<time datetime="2013-09-11T17:55:00+00:00" pubdate><span class='month'>Sep</span> <span class='day'>11</span> <span class='year'>2013</span></time>
+<div><script src='https://gist.github.com/6527929.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
 
 
-</article>
+<p>The example above tests if the mailer service is triggered when the registerUser() method is called. The System Under Test (SUT) here is the UserService, and the mock object is the MailerService.</p>
 
+<p>But what if you wanted to mock one or more methods in the SUT itself? Like the example below:</p>
+
+<div><script src='https://gist.github.com/6527951.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<p>This implementation of the UserService has 2 separate methods: one for saving a User object and a convenience method registerUser which calls saveUser and then sends out a mail.</p>
+
+<p>I&rsquo;ve sometimes wondered how you can make sure that the registerUser method calls the other method without actually covering the implementation of it. Let me rephrase that: &ldquo;How can you mock a method in the SUT?&rdquo;</p>
+
+<p>Of course the answer was quite simple, but it only hit me after a while: Let the SUT become the mock!</p>
+
+<p>In PHPUnit, it&rsquo;s possible to create a <em>partial mock</em>. That&rsquo;s a mock with not all its methods mocked. When you invoke a method of a partial mock that wasn&rsquo;t mocked, then the original method is called. Here&rsquo;s an example in a unit test:</p>
+
+<div><script src='https://gist.github.com/6527967.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<p>So first the SUT is mocked, with expectations for our saveUser method. Then on that mock we call the registerUser method, which is not mocked.</p>
+
+<p>If you generate a code coverage report from that test, then only the registerUser method will be covered, which is exactly what I wanted.</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Tom Van Herreweghe</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-11T17:55:00+00:00" pubdate data-updated="true">11 September 2013 17:55:00</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://Miljar.github.io/blog/2013/09/11/phpunit-mocking-the-system-under-test/" data-via="Miljar" data-counturl="http://Miljar.github.io/blog/2013/09/11/phpunit-mocking-the-system-under-test/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>

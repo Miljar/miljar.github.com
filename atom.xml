@@ -4,7 +4,7 @@
   <title><![CDATA[Miljar - Tom Van Herreweghe]]></title>
   <link href="http://Miljar.github.io/atom.xml" rel="self"/>
   <link href="http://Miljar.github.io/"/>
-  <updated>2013-08-30T13:43:08+00:00</updated>
+  <updated>2013-09-11T18:44:27+00:00</updated>
   <id>http://Miljar.github.io/</id>
   <author>
     <name><![CDATA[Tom Van Herreweghe]]></name>
@@ -12,5 +12,44 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[PHPUnit: Mocking the System Under Test]]></title>
+    <link href="http://Miljar.github.io/blog/2013/09/11/phpunit-mocking-the-system-under-test/"/>
+    <updated>2013-09-11T17:55:00+00:00</updated>
+    <id>http://Miljar.github.io/blog/2013/09/11/phpunit-mocking-the-system-under-test</id>
+    <content type="html"><![CDATA[<h1>PHPUnit: Mocking the System Under Test</h1>
+
+<p>When unit testing a class, at one point you&rsquo;ll have to check if some functionality in a dependency is triggered. Usually this is done by replacing the dependency with a mock object. A well designed system let&rsquo;s you inject dependencies in your objects, thus allowing for easier unit testing.</p>
+
+<div><script src='https://gist.github.com/6527929.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<p>The example above tests if the mailer service is triggered when the registerUser() method is called. The System Under Test (SUT) here is the UserService, and the mock object is the MailerService.</p>
+
+<p>But what if you wanted to mock one or more methods in the SUT itself? Like the example below:</p>
+
+<div><script src='https://gist.github.com/6527951.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<p>This implementation of the UserService has 2 separate methods: one for saving a User object and a convenience method registerUser which calls saveUser and then sends out a mail.</p>
+
+<p>I&rsquo;ve sometimes wondered how you can make sure that the registerUser method calls the other method without actually covering the implementation of it. Let me rephrase that: &ldquo;How can you mock a method in the SUT?&rdquo;</p>
+
+<p>Of course the answer was quite simple, but it only hit me after a while: Let the SUT become the mock!</p>
+
+<p>In PHPUnit, it&rsquo;s possible to create a <em>partial mock</em>. That&rsquo;s a mock with not all its methods mocked. When you invoke a method of a partial mock that wasn&rsquo;t mocked, then the original method is called. Here&rsquo;s an example in a unit test:</p>
+
+<div><script src='https://gist.github.com/6527967.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<p>So first the SUT is mocked, with expectations for our saveUser method. Then on that mock we call the registerUser method, which is not mocked.</p>
+
+<p>If you generate a code coverage report from that test, then only the registerUser method will be covered, which is exactly what I wanted.</p>
+]]></content>
+  </entry>
   
 </feed>
