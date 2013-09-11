@@ -6,8 +6,6 @@ comments: true
 categories: 
 ---
 
-# PHPUnit: Mocking the System Under Test
-
 When unit testing a class, at one point you'll have to check if some functionality in a dependency is triggered. Usually this is done by replacing the dependency with a mock object. A well designed system let's you inject dependencies in your objects, thus allowing for easier unit testing.
 
 {% gist 6527929 %}
