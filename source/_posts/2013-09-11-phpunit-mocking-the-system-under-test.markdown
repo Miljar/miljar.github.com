@@ -68,7 +68,26 @@ The example above tests if the mailer service is triggered when the registerUser
 
 But what if you wanted to mock one or more methods in the SUT itself? Like the example below:
 
-{% gist 6527951 %}
+``` php Example with internal dependencies
+<?php
+class UserService
+{
+    // ...
+	
+	public function registerUser($userObject)
+	{
+		$this->saveUser($userObject);
+		
+		$mailerService = $this->getMailerService();
+		$mailerService->sendMail('registration', $userObject);
+	}
+	
+	public function saveUser($userObject)
+	{
+		// ...
+	}
+}
+```
 
 This implementation of the UserService has 2 separate methods: one for saving a User object and a convenience method registerUser which calls saveUser and then sends out a mail.
 
@@ -78,7 +97,24 @@ Of course the answer was quite simple, but it only hit me after a while: Let the
 
 In PHPUnit, it's possible to create a *partial mock*. That's a mock with not all its methods mocked. When you invoke a method of a partial mock that wasn't mocked, then the original method is called. Here's an example in a unit test:
 
-{% gist 6527967 %}
+``` php Mocking the SUT
+<?php
+class UserServiceTest extends  extends PHPUnit_Framework_TestCase
+{
+
+    public function testRegisteringUserCallsSaveUserMethod()
+	{
+		$userObject = new User('Tom', 'tom@example.com');
+		
+		$mock = $this->getMock('UserService', array('saveUser'));
+		$mock->expects($this->once())
+			->method('saveUser')
+			->with($this->equalTo($userObject));
+			
+		$mock->registerUser($userObject);
+	}
+}
+```
 
 So first the SUT is mocked, with expectations for our saveUser method. Then on that mock we call the registerUser method, which is not mocked.
 
