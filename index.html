@@ -209,8 +209,43 @@
 
 <p>But what if you wanted to mock one or more methods in the SUT itself? Like the example below:</p>
 
-<div><script src='https://gist.github.com/6527951.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
+<figure class='code'><figcaption><span>Example with internal dependencies</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">UserService</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="c1">// ...</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">public</span> <span class="k">function</span> <span class="nf">registerUser</span><span class="p">(</span><span class="nv">$userObject</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">saveUser</span><span class="p">(</span><span class="nv">$userObject</span><span class="p">);</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="nv">$mailerService</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMailerService</span><span class="p">();</span>
+</span><span class='line'>      <span class="nv">$mailerService</span><span class="o">-&gt;</span><span class="na">sendMail</span><span class="p">(</span><span class="s1">&#39;registration&#39;</span><span class="p">,</span> <span class="nv">$userObject</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">public</span> <span class="k">function</span> <span class="nf">saveUser</span><span class="p">(</span><span class="nv">$userObject</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="c1">// ...</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>This implementation of the UserService has 2 separate methods: one for saving a User object and a convenience method registerUser which calls saveUser and then sends out a mail.</p>
@@ -221,8 +256,39 @@
 
 <p>In PHPUnit, it&rsquo;s possible to create a <em>partial mock</em>. That&rsquo;s a mock with not all its methods mocked. When you invoke a method of a partial mock that wasn&rsquo;t mocked, then the original method is called. Here&rsquo;s an example in a unit test:</p>
 
-<div><script src='https://gist.github.com/6527967.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
+<figure class='code'><figcaption><span>Mocking the SUT</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">UserServiceTest</span> <span class="k">extends</span>  <span class="k">extends</span> <span class="nx">PHPUnit_Framework_TestCase</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">public</span> <span class="k">function</span> <span class="nf">testRegisteringUserCallsSaveUserMethod</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="nv">$userObject</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="s1">&#39;Tom&#39;</span><span class="p">,</span> <span class="s1">&#39;tom@example.com&#39;</span><span class="p">);</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="nv">$mock</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMock</span><span class="p">(</span><span class="s1">&#39;UserService&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;saveUser&#39;</span><span class="p">));</span>
+</span><span class='line'>      <span class="nv">$mock</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">once</span><span class="p">())</span>
+</span><span class='line'>          <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;saveUser&#39;</span><span class="p">)</span>
+</span><span class='line'>          <span class="o">-&gt;</span><span class="na">with</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">equalTo</span><span class="p">(</span><span class="nv">$userObject</span><span class="p">));</span>
+</span><span class='line'>          
+</span><span class='line'>      <span class="nv">$mock</span><span class="o">-&gt;</span><span class="na">registerUser</span><span class="p">(</span><span class="nv">$userObject</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>So first the SUT is mocked, with expectations for our saveUser method. Then on that mock we call the registerUser method, which is not mocked.</p>
