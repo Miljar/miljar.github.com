@@ -8,7 +8,61 @@ categories:
 
 When unit testing a class, at one point you'll have to check if some functionality in a dependency is triggered. Usually this is done by replacing the dependency with a mock object. A well designed system let's you inject dependencies in your objects, thus allowing for easier unit testing.
 
-{% gist 6527929 %}
+``` php Mocking dependencies
+<?php
+class UserService
+{
+  proteced $mailerService;
+	
+	public function getMailerService()
+	{
+		if (empty($this->mailerService)) {
+			throw new \RuntimeException('No mailer service set');
+		}
+		
+		return $this->mailerService;
+	}
+	
+	public function setMailerService(MailerInterface $service)
+	{
+		$this->mailerService = $service;
+		
+		return $this;
+	}
+	
+	public function registerUser($userObject)
+	{
+		// …
+		
+		$mailerService = $this->getMailerService();
+		$mailerService->sendMail('registration', $userObject);
+	}
+}
+
+
+class UserServiceTest extends  extends PHPUnit_Framework_TestCase
+{
+
+	public function testRegisteringUserTriggersMail()
+	{
+		$userObject = new User('Tom', 'tom@example.com');
+	
+		$mailerMock = $this->getMock('My\Namespace\MailerService');
+		$mailerMock->expects($this->once())
+			->method('sendMail')
+			->with(
+				$this->equalTo('registration'),
+				$this->equalTo($userObject)
+			);
+			
+		$userService = new UserService();
+		$userService->setMailerService($mailerMock);
+		
+		$userService->registerUser($userObject);
+	}
+
+}
+```
 
 The example above tests if the mailer service is triggered when the registerUser() method is called. The System Under Test (SUT) here is the UserService, and the mock object is the MailerService.
 
