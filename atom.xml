@@ -4,7 +4,7 @@
   <title><![CDATA[Miljar - Tom Van Herreweghe]]></title>
   <link href="http://miljar.github.io/atom.xml" rel="self"/>
   <link href="http://miljar.github.io/"/>
-  <updated>2013-09-12T06:54:06+00:00</updated>
+  <updated>2013-09-12T06:55:31+00:00</updated>
   <id>http://miljar.github.io/</id>
   <author>
     <name><![CDATA[Tom Van Herreweghe]]></name>
@@ -200,7 +200,7 @@
 </span><span class='line'><span class="k">class</span> <span class="nc">UserServiceTest</span> <span class="k">extends</span> <span class="nx">PHPUnit_Framework_TestCase</span>
 </span><span class='line'><span class="p">{</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="k">public</span> <span class="k">function</span> <span class="nf">testRegisteringUserCallsSaveUserMethod</span><span class="p">()</span>
+</span><span class='line'>  <span class="k">public</span> <span class="k">function</span> <span class="nf">testRegisteringUserCallsSaveUserMethod</span><span class="p">()</span>
 </span><span class='line'>  <span class="p">{</span>
 </span><span class='line'>      <span class="nv">$userObject</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="s1">&#39;Tom&#39;</span><span class="p">,</span> <span class="s1">&#39;tom@example.com&#39;</span><span class="p">);</span>
 </span><span class='line'>      
