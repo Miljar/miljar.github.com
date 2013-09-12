@@ -40,7 +40,7 @@ class UserService
 }
 
 
-class UserServiceTest extends  extends PHPUnit_Framework_TestCase
+class UserServiceTest extends PHPUnit_Framework_TestCase
 {
 
 	public function testRegisteringUserTriggersMail()
@@ -99,7 +99,7 @@ In PHPUnit, it's possible to create a *partial mock*. That's a mock with not all
 
 ``` php Mocking the SUT
 <?php
-class UserServiceTest extends  extends PHPUnit_Framework_TestCase
+class UserServiceTest extends PHPUnit_Framework_TestCase
 {
 
     public function testRegisteringUserCallsSaveUserMethod()
