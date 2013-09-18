@@ -9,7 +9,7 @@
   <meta name="author" content="Tom Van Herreweghe">
 
   
-  <meta name="description" content="When unit testing a class, at one point you&rsquo;ll have to check if some functionality in a dependency is triggered. Usually this is done by &hellip;">
+  <meta name="description" content="Background My first encounter with Vim was back in 2000, my first year of university. It didn&rsquo;t really appeal to me. Why on earth bother with &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,138 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/18/vim-for-ide-people-part-1/">VIM for IDE-people - Part 1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-18T17:59:00+00:00" pubdate data-updated="true">18 September 2013 17:59:00</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Background</h1>
+
+<p>My first encounter with Vim was back in 2000, my first year of university. It didn&rsquo;t really appeal to me. Why on earth bother with all these keyboard shortcuts, when we have a mouse to point with?</p>
+
+<p>Fast forward to 2008, my first PHP conference. The cool kids were all using one or another Linux flavor, and Vim for editing their source code.</p>
+
+<p>We&rsquo;re 2013 now, and while I&rsquo;ve been happy editing my source code in <a href="http://netbeans.org" title="Netbeans">Netbeans</a> for the past 8 years, I&rsquo;m not so happy with it anymore. Time to start learning and using Vim! (MacVim in my case)</p>
+
+<h1>First things first: .vimrc</h1>
+
+<p>Where to start? I&rsquo;m an IDE person and some things come with an IDE that don&rsquo;t come with an off-the-shelve Vim installation. Code completion, highlighting, folding, &hellip; Luckily these things can be added to your Vim installation by means of plugins.</p>
+
+<p>Before we start adding plugins, there are some essentials first:</p>
+
+<ul>
+<li>I&rsquo;m not here to tell you how to install Vim. Just google it. I&rsquo;m using <a href="https://code.google.com/p/macvim/" title="MacVim">MacVim</a>.</li>
+<li>Most, if not all, configuration of your Vim editor happens through a file called <code>.vimrc</code>. If it&rsquo;s not there yet, just create a file with that name in your home folder.</li>
+<li>Plugins are installed in a special folder in your home folder: <code>~/.vim/bundle</code>, but more on that later.</li>
+</ul>
+
+
+<p>Here&rsquo;s the <code>.vimrc</code> config that I started with. It&rsquo;s quite basic for now, but I want to learn the basics first, and then gradually extend my knowledge.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="nb">syntax</span> <span class="k">on</span>
+</span><span class='line'><span class="k">filetype</span> plugin indent <span class="k">on</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">set</span> <span class="k">number</span>          <span class="c">&quot; show line numbers</span>
+</span><span class='line'><span class="k">set</span> <span class="nb">lines</span><span class="p">=</span><span class="m">60</span>        <span class="c">&quot; make the editor 60 lines tall</span>
+</span><span class='line'><span class="k">set</span> <span class="nb">columns</span><span class="p">=</span><span class="m">150</span>     <span class="c">&quot; make the editor 150 columns wide</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">set</span> <span class="nb">tabstop</span><span class="p">=</span><span class="m">4</span>       <span class="c">&quot; hitting tab produces 4 columns space</span>
+</span><span class='line'><span class="k">set</span> <span class="nb">shiftwidth</span><span class="p">=</span><span class="m">4</span>    <span class="c">&quot; indent operations produce 4 columns space</span>
+</span><span class='line'><span class="k">set</span> <span class="nb">noexpandtab</span>     <span class="c">&quot; don&#39;t replace a &lt;tab&gt; with &lt;space&gt;&#39;es</span>
+</span><span class='line'><span class="k">set</span> <span class="nb">softtabstop</span><span class="p">=</span><span class="m">4</span>   <span class="c">&quot; amount of columns to use when hitting &lt;tab&gt; in insert mode</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">set</span> <span class="k">history</span><span class="p">=</span><span class="m">1000</span>    <span class="c">&quot; keep track of history for 1000 actions</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">set</span> <span class="nb">ruler</span>          <span class="c">&quot; show cursorposition</span>
+</span><span class='line'><span class="k">set</span> <span class="nb">cursorline</span>     <span class="c">&quot; highlight current line</span>
+</span><span class='line'><span class="k">set</span> <span class="nb">showcmd</span>        <span class="c">&quot; display incomplete commands</span>
+</span><span class='line'><span class="k">set</span> <span class="nb">incsearch</span>      <span class="c">&quot; incremental searching</span>
+</span><span class='line'><span class="k">set</span> <span class="nb">hlsearch</span>       <span class="c">&quot; highlight searchresult</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">set</span> <span class="nb">scrolloff</span><span class="p">=</span><span class="m">4</span>    <span class="c">&quot; keep at least 4 lines above or below the cursor</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&quot; fileformat stuff</span>
+</span><span class='line'><span class="k">set</span> <span class="nb">fileformats</span><span class="p">=</span>unix<span class="p">,</span>dos
+</span><span class='line'><span class="k">set</span> <span class="nb">encoding</span><span class="p">=</span>utf<span class="m">-8</span>
+</span><span class='line'><span class="k">set</span> <span class="nb">fileencodings</span><span class="p">=</span>utf<span class="m">-8</span><span class="p">,</span>ucs<span class="p">-</span>bom<span class="p">,</span>cp1250<span class="p">,</span>iso<span class="m">-8859-1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>These settings won&rsquo;t do anything fancy. Just play with them and see what suits you best.</p>
+
+<h1>Plugins</h1>
+
+<p>Plugins extend the functionality of Vim far beyond its original capabilities. With the help of Vimscript, almost anything becomes possible with Vim.</p>
+
+<p>The easiest way to install plugins&hellip; is with a plugin. Yes, <a href="https://github.com/tpope" title="Tim Pope on Github">Tim Pope</a> created a plugin, Pathogen, which allows you to install other plugins with almost zero configuration.</p>
+
+<p>For installation of Pathogen, head over to <a href="https://github.com/tpope/vim-pathogen" title="Pathogen">https://github.com/tpope/vim-pathogen</a> and follow the instructions.</p>
+
+<p>Add <code>execute pathogen#infect()</code> on top of your <code>.vimrc</code>, and voila! Now you&rsquo;re ready to install plugins.</p>
+
+<h1>What&rsquo;s next?</h1>
+
+<p>We now have or base Vim configuration: We have a <code>.vimrc</code> file in place that we can add configuration options to. And we are ready to install some plugins.</p>
+
+<p>As I&rsquo;m learning and using Vim as we speak, I&rsquo;ll add more blog posts to tell you about my struggles, plugins I&rsquo;m using and other stuff I&rsquo;ve learned about Vim.</p>
+
+<p>My goal is to stop using an IDE alltogether, and use Vim for all my source code editing. It won&rsquo;t be an easy task, but if others can manage it, then so can I. By blogging about my experiences, I hope I can help other people with their struggles.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -312,6 +444,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/09/18/vim-for-ide-people-part-1/">VIM for IDE-people - Part 1</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/09/11/phpunit-mocking-the-system-under-test/">PHPUnit: Mocking the System Under Test</a>
