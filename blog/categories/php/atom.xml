@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: php | Miljar - Tom Van Herreweghe]]></title>
+  <link href="http://miljar.github.io/blog/categories/php/atom.xml" rel="self"/>
+  <link href="http://miljar.github.io/"/>
+  <updated>2013-09-18T18:55:05+00:00</updated>
+  <id>http://miljar.github.io/</id>
+  <author>
+    <name><![CDATA[Tom Van Herreweghe]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[PHPUnit: Mocking the System Under Test]]></title>
+    <link href="http://miljar.github.io/blog/2013/09/11/phpunit-mocking-the-system-under-test/"/>
+    <updated>2013-09-11T17:55:00+00:00</updated>
+    <id>http://miljar.github.io/blog/2013/09/11/phpunit-mocking-the-system-under-test</id>
+    <content type="html"><![CDATA[<p>When unit testing a class, at one point you&rsquo;ll have to check if some functionality in a dependency is triggered. Usually this is done by replacing the dependency with a mock object. A well designed system let&rsquo;s you inject dependencies in your objects, thus allowing for easier unit testing.</p>
+
+<p>``` php Mocking dependencies
+&lt;?php
+class UserService
+{
+  proteced $mailerService;</p>
+
+<pre><code>public function getMailerService()
+{
+    if (empty($this-&gt;mailerService)) {
+        throw new \RuntimeException('No mailer service set');
+    }
+
+    return $this-&gt;mailerService;
+}
+
+public function setMailerService(MailerInterface $service)
+{
+    $this-&gt;mailerService = $service;
+
+    return $this;
+}
+
+public function registerUser($userObject)
+{
+    // …
+
+    $mailerService = $this-&gt;getMailerService();
+    $mailerService-&gt;sendMail('registration', $userObject);
+}
+</code></pre>
+
+<p>}</p>
+
+<p>class UserServiceTest extends PHPUnit_Framework_TestCase
+{</p>
+
+<pre><code>public function testRegisteringUserTriggersMail()
+{
+    $userObject = new User('Tom', 'tom@example.com');
+
+    $mailerMock = $this-&gt;getMock('My\Namespace\MailerService');
+    $mailerMock-&gt;expects($this-&gt;once())
+        -&gt;method('sendMail')
+        -&gt;with(
+            $this-&gt;equalTo('registration'),
+            $this-&gt;equalTo($userObject)
+        );
+
+    $userService = new UserService();
+    $userService-&gt;setMailerService($mailerMock);
+
+    $userService-&gt;registerUser($userObject);
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>The example above tests if the mailer service is triggered when the registerUser() method is called. The System Under Test (SUT) here is the UserService, and the mock object is the MailerService.</p>
+
+<p>But what if you wanted to mock one or more methods in the SUT itself? Like the example below:</p>
+
+<p>``` php Example with internal dependencies
+&lt;?php
+class UserService
+{</p>
+
+<pre><code>// ...
+
+public function registerUser($userObject)
+{
+    $this-&gt;saveUser($userObject);
+
+    $mailerService = $this-&gt;getMailerService();
+    $mailerService-&gt;sendMail('registration', $userObject);
+}
+
+public function saveUser($userObject)
+{
+    // ...
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>This implementation of the UserService has 2 separate methods: one for saving a User object and a convenience method registerUser which calls saveUser and then sends out a mail.</p>
+
+<p>I&rsquo;ve sometimes wondered how you can make sure that the registerUser method calls the other method without actually covering the implementation of it. Let me rephrase that: &ldquo;How can you mock a method in the SUT?&rdquo;</p>
+
+<p>Of course the answer was quite simple, but it only hit me after a while: Let the SUT become the mock!</p>
+
+<p>In PHPUnit, it&rsquo;s possible to create a <em>partial mock</em>. That&rsquo;s a mock with not all its methods mocked. When you invoke a method of a partial mock that wasn&rsquo;t mocked, then the original method is called. Here&rsquo;s an example in a unit test:</p>
+
+<p>``` php Mocking the SUT
+&lt;?php
+class UserServiceTest extends PHPUnit_Framework_TestCase
+{</p>
+
+<pre><code>public function testRegisteringUserCallsSaveUserMethod()
+{
+    $userObject = new User('Tom', 'tom@example.com');
+
+    $mock = $this-&gt;getMock('UserService', array('saveUser'));
+    $mock-&gt;expects($this-&gt;once())
+        -&gt;method('saveUser')
+        -&gt;with($this-&gt;equalTo($userObject));
+
+    $mock-&gt;registerUser($userObject);
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>So first the SUT is mocked, with expectations for our saveUser method. Then on that mock we call the registerUser method, which is not mocked.</p>
+
+<p>If you generate a code coverage report from that test, then only the registerUser method will be covered, which is exactly what I wanted.</p>
+]]></content>
+  </entry>
+  
+</feed>
