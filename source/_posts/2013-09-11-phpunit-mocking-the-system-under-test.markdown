@@ -3,7 +3,7 @@ layout: post
 title: "PHPUnit: Mocking the System Under Test"
 date: 2013-09-11 17:55
 comments: true
-categories: 
+categories: [php, phpunit, unit testing]
 ---
 
 When unit testing a class, at one point you'll have to check if some functionality in a dependency is triggered. Usually this is done by replacing the dependency with a mock object. A well designed system let's you inject dependencies in your objects, thus allowing for easier unit testing.
@@ -102,7 +102,7 @@ In PHPUnit, it's possible to create a *partial mock*. That's a mock with not all
 class UserServiceTest extends PHPUnit_Framework_TestCase
 {
 
-    public function testRegisteringUserCallsSaveUserMethod()
+	public function testRegisteringUserCallsSaveUserMethod()
 	{
 		$userObject = new User('Tom', 'tom@example.com');
 		
