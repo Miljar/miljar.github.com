@@ -4,7 +4,7 @@
   <title><![CDATA[Miljar - Tom Van Herreweghe]]></title>
   <link href="http://miljar.github.io/atom.xml" rel="self"/>
   <link href="http://miljar.github.io/"/>
-  <updated>2013-09-18T18:55:05+00:00</updated>
+  <updated>2013-09-20T06:52:05+00:00</updated>
   <id>http://miljar.github.io/</id>
   <author>
     <name><![CDATA[Tom Van Herreweghe]]></name>
@@ -115,6 +115,8 @@
 <p>As I&rsquo;m learning and using Vim as we speak, I&rsquo;ll add more blog posts to tell you about my struggles, plugins I&rsquo;m using and other stuff I&rsquo;ve learned about Vim.</p>
 
 <p>My goal is to stop using an IDE alltogether, and use Vim for all my source code editing. It won&rsquo;t be an easy task, but if others can manage it, then so can I. By blogging about my experiences, I hope I can help other people with their struggles.</p>
+
+<p><strong>Update 20/09/2013</strong> It has come to my attention that the examples of supposedly lacking features are actually available right off the bat in Vim. They&rsquo;re just a bit deeper in the documentation. The things I should have mentioned were: git integration, auto-complete with the <code>tab</code> key, automatically adding closing angles, &hellip;</p>
 ]]></content>
   </entry>
   
