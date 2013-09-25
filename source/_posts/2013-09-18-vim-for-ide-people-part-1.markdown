@@ -74,3 +74,5 @@ We now have our base Vim configuration: We have a `.vimrc` file in place that we
 As I'm learning and using Vim as we speak, I'll add more blog posts to tell you about my struggles, plugins I'm using and other stuff I've learned about Vim.
 
 My goal is to stop using an IDE alltogether, and use Vim for all my source code editing. It won't be an easy task, but if others can manage it, then so can I. By blogging about my experiences, I hope I can help other people with their struggles.
+
+**Update 20/09/2013** It has come to my attention that the examples of supposedly lacking features are actually available right off the bat in Vim. They're just a bit deeper in the documentation. The things I should have mentioned were: git integration, auto-complete with the `tab` key, automatically adding closing angles, ...
