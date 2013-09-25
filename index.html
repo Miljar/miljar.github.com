@@ -1,541 +1,194 @@
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>Miljar - Tom Van Herreweghe</title>
-  <meta name="author" content="Tom Van Herreweghe">
 
-  
-  <meta name="description" content="Background My first encounter with Vim was back in the year 2000, my first year of university. It didn&rsquo;t really appeal to me. Why on Earth &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://miljar.github.io">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="Miljar - Tom Van Herreweghe" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
-  
-
-</head>
-
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">Miljar - Tom Van Herreweghe</a></h1>
-  
-    <h2>Random thoughts and code</h2>
-  
-</hgroup>
-
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:miljar.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
-
-</nav>
-  <div id="main">
-    <div id="content">
-      <div class="blog-index">
-  
-  
-  
-    <article>
-      
-  <header>
+<!doctype html>
+  <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+  <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+  <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+  <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>This is the title for you homepage - Miljar - Tom Van Herreweghe</title>
+    <meta name="author" content="Tom Van Herreweghe">
     
-      <h1 class="entry-title"><a href="/blog/2013/09/18/vim-for-ide-people-part-1/">VIM for IDE-people - Part 1</a></h1>
+    <meta name="description" content="Hear no evil Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur, facilis illo magni nobis ea quibusdam blanditiis officia ex dolorum &hellip;">
     
+    <meta name="viewport" content="width=device-width">
     
-      <p class="meta">
-        
+    <link rel="canonical" href="http://miljar.github.io">
+    <link href="/favicon.png" rel="icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet">
+    <link href="//atom.xml" rel="alternate" title="Miljar - Tom Van Herreweghe" type="application/atom+xml">
+  </head>
 
 
+  <body >
 
+    <header>
+      <div class="grid-wrapper">
+  <div class="grid">
 
-
-
-
-
-  
-
-
-<time datetime="2013-09-18T17:59:00+00:00" pubdate data-updated="true">18 September 2013 17:59:00</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>Background</h1>
-
-<p>My first encounter with Vim was back in the year 2000, my first year of university. It didn&rsquo;t really appeal to me. Why on Earth bother with all these keyboard shortcuts when we have a mouse to point with?</p>
-
-<p>Fast forward to 2008, my first PHP conference. The cool kids were all using one or another Linux flavor, and Vim for editing their source code.</p>
-
-<p>We&rsquo;re 2013 now, and while I&rsquo;ve been happy editing my source code in <a href="http://netbeans.org" title="Netbeans">Netbeans</a> for the past 8 years, I&rsquo;m not so happy with it anymore. Time to start learning and using Vim! (MacVim in my case)</p>
-
-<h1>First things first: .vimrc</h1>
-
-<p>Where to start? I&rsquo;m an IDE person and some things come with an IDE that don&rsquo;t come with an off-the-shelf Vim installation. Code completion, highlighting, folding, &hellip; Luckily these things can be added to your Vim installation by means of plugins.</p>
-
-<p>Before we start adding plugins, there are some essentials first:</p>
-
-<ul>
-<li>I&rsquo;m not here to tell you how to install Vim. Just google it. I&rsquo;m using <a href="https://code.google.com/p/macvim/" title="MacVim">MacVim</a>.</li>
-<li>Most, if not all, configuration of your Vim editor happens through a file called <code>.vimrc</code>. If it&rsquo;s not there yet, just create a file with that name in your home folder.</li>
-<li>Plugins are installed in a special folder in your home folder: <code>~/.vim/bundle</code>, but more on that later.</li>
-</ul>
-
-
-<p>Here&rsquo;s the <code>.vimrc</code> config that I started with. It&rsquo;s quite basic for now, but I want to learn the basics first, and then gradually extend my knowledge.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="nb">syntax</span> <span class="k">on</span>
-</span><span class='line'><span class="k">filetype</span> plugin indent <span class="k">on</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">set</span> <span class="k">number</span>          <span class="c">&quot; show line numbers</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">lines</span><span class="p">=</span><span class="m">60</span>        <span class="c">&quot; make the editor 60 lines tall</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">columns</span><span class="p">=</span><span class="m">150</span>     <span class="c">&quot; make the editor 150 columns wide</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">set</span> <span class="nb">tabstop</span><span class="p">=</span><span class="m">4</span>       <span class="c">&quot; hitting tab produces 4 columns space</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">shiftwidth</span><span class="p">=</span><span class="m">4</span>    <span class="c">&quot; indent operations produce 4 columns space</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">noexpandtab</span>     <span class="c">&quot; don&#39;t replace a &lt;tab&gt; with &lt;space&gt;&#39;es</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">softtabstop</span><span class="p">=</span><span class="m">4</span>   <span class="c">&quot; amount of columns to use when hitting &lt;tab&gt; in insert mode</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">set</span> <span class="k">history</span><span class="p">=</span><span class="m">1000</span>    <span class="c">&quot; keep track of history for 1000 actions</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">set</span> <span class="nb">ruler</span>          <span class="c">&quot; show cursorposition</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">cursorline</span>     <span class="c">&quot; highlight current line</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">showcmd</span>        <span class="c">&quot; display incomplete commands</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">incsearch</span>      <span class="c">&quot; incremental searching</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">hlsearch</span>       <span class="c">&quot; highlight searchresult</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">set</span> <span class="nb">scrolloff</span><span class="p">=</span><span class="m">4</span>    <span class="c">&quot; keep at least 4 lines above or below the cursor</span>
-</span><span class='line'>
-</span><span class='line'><span class="c">&quot; fileformat stuff</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">fileformats</span><span class="p">=</span>unix<span class="p">,</span>dos
-</span><span class='line'><span class="k">set</span> <span class="nb">encoding</span><span class="p">=</span>utf<span class="m">-8</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">fileencodings</span><span class="p">=</span>utf<span class="m">-8</span><span class="p">,</span>ucs<span class="p">-</span>bom<span class="p">,</span>cp1250<span class="p">,</span>iso<span class="m">-8859-1</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>These settings won&rsquo;t do anything fancy. Just play with them and see what suits you best.</p>
-
-<h1>Plugins</h1>
-
-<p>Plugins extend the functionality of Vim far beyond its original capabilities. With the help of Vimscript, almost anything becomes possible with Vim.</p>
-
-<p>The easiest way to install plugins&hellip; is with a plugin. Yes, <a href="https://github.com/tpope" title="Tim Pope on Github">Tim Pope</a> created a plugin, Pathogen, which allows you to install other plugins with almost zero configuration.</p>
-
-<p>For installation of Pathogen, head over to <a href="https://github.com/tpope/vim-pathogen" title="Pathogen">https://github.com/tpope/vim-pathogen</a> and follow the instructions.</p>
-
-<p>Add <code>execute pathogen#infect()</code> on top of your <code>.vimrc</code>, and voila! Now you&rsquo;re ready to install plugins.</p>
-
-<h1>What&rsquo;s next?</h1>
-
-<p>We now have our base Vim configuration: We have a <code>.vimrc</code> file in place that we can add configuration options to. And we are ready to install some plugins.</p>
-
-<p>As I&rsquo;m learning and using Vim as we speak, I&rsquo;ll add more blog posts to tell you about my struggles, plugins I&rsquo;m using and other stuff I&rsquo;ve learned about Vim.</p>
-
-<p>My goal is to stop using an IDE alltogether, and use Vim for all my source code editing. It won&rsquo;t be an easy task, but if others can manage it, then so can I. By blogging about my experiences, I hope I can help other people with their struggles.</p>
-
-<p><strong>Update 20/09/2013</strong> It has come to my attention that the examples of supposedly lacking features are actually available right off the bat in Vim. They&rsquo;re just a bit deeper in the documentation. The things I should have mentioned were: git integration, auto-complete with the <code>tab</code> key, automatically adding closing angles, &hellip;</p>
+    <div class="grid__item two-fifths lap-four-sixths palm-one-whole">
+  <a href="/" class="site-title">Miljar - Tom Van Herreweghe</a>
 </div>
-  
-  
 
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/09/11/phpunit-mocking-the-system-under-test/">PHPUnit: Mocking the System Under Test</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-09-11T17:55:00+00:00" pubdate data-updated="true">11 September 2013 17:55:00</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>When unit testing a class, at one point you&rsquo;ll have to check if some functionality in a dependency is triggered. Usually this is done by replacing the dependency with a mock object. A well designed system let&rsquo;s you inject dependencies in your objects, thus allowing for easier unit testing.</p>
-
-<figure class='code'><figcaption><span>Mocking dependencies</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
-</span><span class='line'><span class="k">class</span> <span class="nc">UserService</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="nx">proteced</span> <span class="nv">$mailerService</span><span class="p">;</span>
-</span><span class='line'>  
-</span><span class='line'>  <span class="k">public</span> <span class="k">function</span> <span class="nf">getMailerService</span><span class="p">()</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">mailerService</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">throw</span> <span class="k">new</span> <span class="nx">\RuntimeException</span><span class="p">(</span><span class="s1">&#39;No mailer service set&#39;</span><span class="p">);</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      
-</span><span class='line'>      <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">mailerService</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  
-</span><span class='line'>  <span class="k">public</span> <span class="k">function</span> <span class="nf">setMailerService</span><span class="p">(</span><span class="nx">MailerInterface</span> <span class="nv">$service</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">mailerService</span> <span class="o">=</span> <span class="nv">$service</span><span class="p">;</span>
-</span><span class='line'>      
-</span><span class='line'>      <span class="k">return</span> <span class="nv">$this</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  
-</span><span class='line'>  <span class="k">public</span> <span class="k">function</span> <span class="nf">registerUser</span><span class="p">(</span><span class="nv">$userObject</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="c1">// …</span>
-</span><span class='line'>      
-</span><span class='line'>      <span class="nv">$mailerService</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMailerService</span><span class="p">();</span>
-</span><span class='line'>      <span class="nv">$mailerService</span><span class="o">-&gt;</span><span class="na">sendMail</span><span class="p">(</span><span class="s1">&#39;registration&#39;</span><span class="p">,</span> <span class="nv">$userObject</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">UserServiceTest</span> <span class="k">extends</span> <span class="nx">PHPUnit_Framework_TestCase</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">public</span> <span class="k">function</span> <span class="nf">testRegisteringUserTriggersMail</span><span class="p">()</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="nv">$userObject</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="s1">&#39;Tom&#39;</span><span class="p">,</span> <span class="s1">&#39;tom@example.com&#39;</span><span class="p">);</span>
-</span><span class='line'>  
-</span><span class='line'>      <span class="nv">$mailerMock</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMock</span><span class="p">(</span><span class="s1">&#39;My\Namespace\MailerService&#39;</span><span class="p">);</span>
-</span><span class='line'>      <span class="nv">$mailerMock</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">once</span><span class="p">())</span>
-</span><span class='line'>          <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;sendMail&#39;</span><span class="p">)</span>
-</span><span class='line'>          <span class="o">-&gt;</span><span class="na">with</span><span class="p">(</span>
-</span><span class='line'>              <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">equalTo</span><span class="p">(</span><span class="s1">&#39;registration&#39;</span><span class="p">),</span>
-</span><span class='line'>              <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">equalTo</span><span class="p">(</span><span class="nv">$userObject</span><span class="p">)</span>
-</span><span class='line'>          <span class="p">);</span>
-</span><span class='line'>          
-</span><span class='line'>      <span class="nv">$userService</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserService</span><span class="p">();</span>
-</span><span class='line'>      <span class="nv">$userService</span><span class="o">-&gt;</span><span class="na">setMailerService</span><span class="p">(</span><span class="nv">$mailerMock</span><span class="p">);</span>
-</span><span class='line'>      
-</span><span class='line'>      <span class="nv">$userService</span><span class="o">-&gt;</span><span class="na">registerUser</span><span class="p">(</span><span class="nv">$userObject</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The example above tests if the mailer service is triggered when the registerUser() method is called. The System Under Test (SUT) here is the UserService, and the mock object is the MailerService.</p>
-
-<p>But what if you wanted to mock one or more methods in the SUT itself? Like the example below:</p>
-
-<figure class='code'><figcaption><span>Example with internal dependencies</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
-</span><span class='line'><span class="k">class</span> <span class="nc">UserService</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="c1">// ...</span>
-</span><span class='line'>  
-</span><span class='line'>  <span class="k">public</span> <span class="k">function</span> <span class="nf">registerUser</span><span class="p">(</span><span class="nv">$userObject</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">saveUser</span><span class="p">(</span><span class="nv">$userObject</span><span class="p">);</span>
-</span><span class='line'>      
-</span><span class='line'>      <span class="nv">$mailerService</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMailerService</span><span class="p">();</span>
-</span><span class='line'>      <span class="nv">$mailerService</span><span class="o">-&gt;</span><span class="na">sendMail</span><span class="p">(</span><span class="s1">&#39;registration&#39;</span><span class="p">,</span> <span class="nv">$userObject</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  
-</span><span class='line'>  <span class="k">public</span> <span class="k">function</span> <span class="nf">saveUser</span><span class="p">(</span><span class="nv">$userObject</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="c1">// ...</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This implementation of the UserService has 2 separate methods: one for saving a User object and a convenience method registerUser which calls saveUser and then sends out a mail.</p>
-
-<p>I&rsquo;ve sometimes wondered how you can make sure that the registerUser method calls the other method without actually covering the implementation of it. Let me rephrase that: &ldquo;How can you mock a method in the SUT?&rdquo;</p>
-
-<p>Of course the answer was quite simple, but it only hit me after a while: Let the SUT become the mock!</p>
-
-<p>In PHPUnit, it&rsquo;s possible to create a <em>partial mock</em>. That&rsquo;s a mock with not all its methods mocked. When you invoke a method of a partial mock that wasn&rsquo;t mocked, then the original method is called. Here&rsquo;s an example in a unit test:</p>
-
-<figure class='code'><figcaption><span>Mocking the SUT</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
-</span><span class='line'><span class="k">class</span> <span class="nc">UserServiceTest</span> <span class="k">extends</span> <span class="nx">PHPUnit_Framework_TestCase</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">public</span> <span class="k">function</span> <span class="nf">testRegisteringUserCallsSaveUserMethod</span><span class="p">()</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="nv">$userObject</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="s1">&#39;Tom&#39;</span><span class="p">,</span> <span class="s1">&#39;tom@example.com&#39;</span><span class="p">);</span>
-</span><span class='line'>      
-</span><span class='line'>      <span class="nv">$mock</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMock</span><span class="p">(</span><span class="s1">&#39;UserService&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;saveUser&#39;</span><span class="p">));</span>
-</span><span class='line'>      <span class="nv">$mock</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">once</span><span class="p">())</span>
-</span><span class='line'>          <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;saveUser&#39;</span><span class="p">)</span>
-</span><span class='line'>          <span class="o">-&gt;</span><span class="na">with</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">equalTo</span><span class="p">(</span><span class="nv">$userObject</span><span class="p">));</span>
-</span><span class='line'>          
-</span><span class='line'>      <span class="nv">$mock</span><span class="o">-&gt;</span><span class="na">registerUser</span><span class="p">(</span><span class="nv">$userObject</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So first the SUT is mocked, with expectations for our saveUser method. Then on that mock we call the registerUser method, which is not mocked.</p>
-
-<p>If you generate a code coverage report from that test, then only the registerUser method will be covered, which is exactly what I wanted.</p>
+<div class="grid__item three-fifths lap-two-sixths palm-one-whole">
+  <nav>
+    <input type="checkbox" id="toggle">
+<label for="toggle" class="toggle" data-open="Main Menu" data-close="Close Menu"></label>
+<ul class="menu pull-right">
+  <li><a href="/">Home</a></li>
+  <li><a href="/blog/">Blog</a></li>
+</ul>
+  </nav>
 </div>
-  
-  
 
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
   </div>
 </div>
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
+    </header>
+
     
-      <li class="post">
-        <a href="/blog/2013/09/18/vim-for-ide-people-part-1/">VIM for IDE-people - Part 1</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/09/11/phpunit-mocking-the-system-under-test/">PHPUnit: Mocking the System Under Test</a>
-      </li>
-    
-  </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
-  </ul>
-  
-  <a href="https://github.com/Miljar">@Miljar</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'Miljar',
-            count: 0,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
-</section>
-
-
-
-
-
-  
-</aside>
-
+      <div class="hero" style="background-image: url('/images/cliffs_of_moher.jpg');">
+  <div class="grid-wrapper">
+    <div class="grid flex">
+      <div class="grid__item flex__item two-fifths palm-one-whole avatar">
+        <img class="gravatar" src="/images/gravatar.jpg" alt="Tom Van Herreweghe's Picture">
+      </div>
+      <div class="grid__item flex__item three-fifths palm-one-whole">
+        <h1>Tom Van Herreweghe</h1>
+        <hr>
+        <p class="lead">
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
+        </p>
+      </div>
     </div>
   </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Tom Van Herreweghe -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
 
-</footer>
-  
+  <div class="credit">
+    <p>
+      Cliffs of Moher, by <a href="http://www.flickr.com/photos/alfarese/2780612581/" target="_blank">Alessandro Farese</a> <a href="http://creativecommons.org/licenses/by-nc-nd/2.0/deed.en" target="_blank" class="licence"><small>(by-nc-nd)</small></a>
+    </p>
+  </div>
+</div>
 
-<script type="text/javascript">
-      var disqus_shortname = 'miljar';
-      
+    
+
+    <div class="grid-wrapper">
+      <div class="grid grid-center">
         
-        var disqus_script = 'count.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
+        <div class="grid__item one-whole">
+        
+
+          
+
+<div class="grid-wrapper">
+  <div class="grid">
+    <div class="grid__item one-third lap-one-whole palm-one-whole usp">
+      <div class="grid">
+        <div class="grid__item one-whole lap-one-third">
+          <span class="icon">
+            <i class="icon-laptop"></i>
+          </span>
+        </div>
+
+        <div class="grid__item one-whole lap-two-thirds">
+          <h2 class="title">Hear no evil</h2>
+          <hr>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur, facilis illo magni nobis ea quibusdam blanditiis officia ex dolorum laboriosam dolor earum inventore aperiam nam molestiae. Aperiam, est temporibus officiis.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid__item one-third lap-one-whole palm-one-whole usp">
+      <div class="grid">
+        <div class="grid__item one-whole lap-one-third">
+          <span class="icon">
+            <i class="icon-search"></i>
+          </span>
+        </div>
+
+        <div class="grid__item one-whole lap-two-thirds">
+          <h2 class="title">See no evil</h2>
+          <hr>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit, quia magni ipsum sapiente libero perspiciatis adipisci quibusdam nam nemo aut asperiores deserunt consectetur. Rem distinctio libero amet molestias saepe vero!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid__item one-third lap-one-whole palm-one-whole usp">
+      <div class="grid">
+        <div class="grid__item one-whole lap-one-third">
+          <span class="icon">
+            <i class="icon-coffee"></i>
+          </span>
+        </div>
+
+        <div class="grid__item one-whole lap-two-thirds">
+          <h2 class="title">Speak no evil</h2>
+          <hr>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus repellendus officia iusto reiciendis quae quod consequuntur tempora. Rem, placeat laboriosam perferendis eum obcaecati illo iste molestias? Optio in expedita dolor!
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+        
+        </div>
+        
+        
+      </div>
+    </div>
+    
+    <footer>
+      <div class="grid-wrapper">
+  <div class="grid">
+    <div class="grid__item">
+      <p class="copyright">
+  All content by Tom Van Herreweghe and licenced under <a href="//creativecommons.org/licenses/by-nc-sa/3.0/ie/">Creative Commons</a>.<br>
+  Code under <a href="//github.com/coogie/oscailte/blob/master/README.md">MIT Licence</a>.
+</p>
+    </div>
+  </div>
+</div>
+
+    </footer>
+
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="//crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
+<script defer src="/javascripts/octopress.js"></script>
+
+
+
+
+<script>
+  var disqus_shortname = 'miljar';
+  
+    
+    // var disqus_developer = 1;
+    var disqus_identifier = 'http://miljar.github.io/index.html';
+    var disqus_url = 'http://miljar.github.io/index.html';
+    var disqus_script = 'embed.js';
+  
+  (function () {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  }());
 </script>
 
 
 
 
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
+  </body>
 </html>
