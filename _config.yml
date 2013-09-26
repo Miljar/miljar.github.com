@@ -19,7 +19,16 @@ date_format: "%d %B %Y %T"
 subscribe_rss: /atom.xml
 subscribe_email:
 # RSS feeds can list your email address if you like
-email:
+email: tom@theanalogguy.be
+
+
+social:
+    title: Social stuff
+    github: miljar
+    googleplus: 109699955996369519315
+    linkedin: tomvanherreweghe
+    twitter: miljar
+
 
 # ----------------------- #
 #    Jekyll & Plugins     #

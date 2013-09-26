@@ -1,0 +1,12 @@
+<div class="grid">
+
+	<section class="aside-module grid__item one-whole lap-one-half">
+		<h1 class="title delta">Mugshot</h1>
+		<img class="gravatar" src="/images/gravatar.jpg" alt="{{ site.author }}'s Picture"{% if site.email and site.gravatar != false %} data-gravatar="{{ site.email }}"{% endif %}>
+	</section>
+
+  {% include asides/social.html %}
+
+  {% include_array default_asides %}
+
+</div>
