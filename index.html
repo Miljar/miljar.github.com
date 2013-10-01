@@ -11,7 +11,7 @@
     <title>Miljar - Tom Van Herreweghe</title>
     <meta name="author" content="Tom Van Herreweghe">
     
-    <meta name="description" content="VIM for IDE-people - part 1 18 September 2013 17:59:00 vim macvim Background My first encounter with Vim was back in the year 2000, my first year of &hellip;">
+    <meta name="description" content="VIM for IDE-people - part 2 24 September 2013 16:25:00 vim macvim Color Scheme: Solarized Plugin Let&rsquo;s start with an easy one. When working &hellip;">
     
     <meta name="viewport" content="width=device-width">
     
@@ -57,6 +57,91 @@
 
           
 
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/09/24/vim-for-ide-people-part-2/">VIM for IDE-people - part 2</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-09-24T16:25:00+00:00" pubdate data-updated="true"><i class="icon-calendar"></i> 24 September 2013 16:25:00</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/vim/">vim</a></li>
+    
+      <li><a href="/blog/categories/macvim/">macvim</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+  </div>
+  
+</header>
+
+
+
+
+  <h1>Color Scheme: Solarized Plugin</h1>
+
+<p>Let&rsquo;s start with an easy one. When working with Netbeans, I had the <a href="http://ethanschoonover.com/solarized">Solarized color scheme</a> installed. I was really used to this color scheme, and the first thing I did, was install it for Vim.</p>
+
+<p>Installation is quite simple thanks to Pathogen: go to your <code>~/.vim/bundle</code> folder and <code>git clone git://github.com/altercation/vim-colors-solarized.git</code></p>
+
+<p>Then edit your <code>~/.vimrc</code> configuration file. Add the following if you like working with a dark background:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="nb">syntax</span> enable
+</span><span class='line'><span class="k">set</span> <span class="nb">background</span><span class="p">=</span><span class="nb">dark</span>
+</span><span class='line'><span class="k">colorscheme</span> solarized
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you like the lighter background, then use this configuration:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="nb">syntax</span> enable
+</span><span class='line'><span class="k">set</span> <span class="nb">background</span><span class="p">=</span><span class="nb">light</span>
+</span><span class='line'><span class="k">colorscheme</span> solarized
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you want to reload your <code>~/.vimrc</code> configuration in your current Vim instance, hit <code>:</code> and type <code>so ~/.vimrc</code> + enter.</p>
+
+<p><img class="center" src="/images/2013-09-24/screen-php-dark.png" title="Vim Solarized" ></p>
+
+
+  </article>
+  <hr>
 
   
   <article class="listing">
@@ -504,6 +589,10 @@
   <section id="recent-posts" class="aside-module grid__item one-whole lap-one-half">
   <h1 class="title delta">Recent Posts</h1>
   <ul class="divided">
+    
+      <li class="post">
+        <a href="/blog/2013/09/24/vim-for-ide-people-part-2/">VIM for IDE-people - part 2</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/09/18/vim-for-ide-people-part-1/">VIM for IDE-people - part 1</a>
