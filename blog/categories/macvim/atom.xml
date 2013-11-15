@@ -4,7 +4,7 @@
   <title><![CDATA[Category: macvim | Miljar - Tom Van Herreweghe]]></title>
   <link href="http://miljar.github.io/blog/categories/macvim/atom.xml" rel="self"/>
   <link href="http://miljar.github.io/"/>
-  <updated>2013-11-15T13:52:58+00:00</updated>
+  <updated>2013-11-15T13:59:28+00:00</updated>
   <id>http://miljar.github.io/</id>
   <author>
     <name><![CDATA[Tom Van Herreweghe]]></name>
@@ -88,9 +88,9 @@ git clone https://github.com/scrooloose/nerdtree.git
 
 <p><em>Toggle the bookmark table</em>: <code>B</code></p>
 
-<p><img class="center" src="/images/2013-11-08/nerdtree_bookmarks.png" title="NERDTree bookmark table" >
- <code>
-*Delete bookmark*: Go to the corresponding line in the bookmark table and hit</code>D`.</p>
+<p><img class="center" src="/images/2013-11-08/nerdtree_bookmarks.png" title="NERDTree bookmark table" ></p>
+
+<p><em>Delete bookmark</em>: Go to the corresponding line in the bookmark table and hit <code>D</code>.</p>
 
 <h2>Final words</h2>
 
