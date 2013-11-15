@@ -4,7 +4,7 @@
   <title><![CDATA[Miljar - Tom Van Herreweghe]]></title>
   <link href="http://miljar.github.io/atom.xml" rel="self"/>
   <link href="http://miljar.github.io/"/>
-  <updated>2013-10-01T18:09:24+00:00</updated>
+  <updated>2013-11-15T13:52:58+00:00</updated>
   <id>http://miljar.github.io/</id>
   <author>
     <name><![CDATA[Tom Van Herreweghe]]></name>
@@ -12,6 +12,98 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[VIM for IDE-people - part 3]]></title>
+    <link href="http://miljar.github.io/blog/2013/11/08/vim-for-ide-people-part-3/"/>
+    <updated>2013-11-08T16:40:00+00:00</updated>
+    <id>http://miljar.github.io/blog/2013/11/08/vim-for-ide-people-part-3</id>
+    <content type="html"><![CDATA[<h1>File system explorer: NERDTree</h1>
+
+<p>When working with an IDE, you usually have a way of browsing your local filesystem to choose a file to edit. There&rsquo;s not such standard functionality built-in into Vim. Luckily there&rsquo;s <a href="https://github.com/scrooloose/nerdtree">The NERD Tree</a>.</p>
+
+<p>NERDTree allows you to browse your file system, open files an directories, and allows simple file operations like creating files/directories, moving them, deleting them, copying them. Everything is presented the way you&rsquo;re used to: a tree. Hence the name.</p>
+
+<h2>Installation</h2>
+
+<p>Installation is quite easy with <a href="https://github.com/tpope/vim-pathogen">Pathogen</a>, which we installed in <a href="http://miljar.github.io/blog/2013/09/18/vim-for-ide-people-part-1/">Part 1</a>:</p>
+
+<pre><code>cd ~/.vim/bundle
+git clone https://github.com/scrooloose/nerdtree.git
+</code></pre>
+
+<p>Then reload Vim, and NERDTree is available. Display the NERDTree with <code>:NERDTree</code>. This will show you a tree of your filesystem, starting from your current working directory.</p>
+
+<p><img class="center" src="http://miljar.github.io/images/2013-11-08/nerdtree_example.png" title="NERDTree example" ></p>
+
+<h2>Basic commands</h2>
+
+<p>When the NERDTree window is active, you can find all available commands by pressing <code>?</code>. This displays the help. Close the help by pressing <code>?</code> again. Below is an overview of commands I&rsquo;m currently using most:</p>
+
+<h3>Opening/Closing NERDTree</h3>
+
+<p>Just opening NERDTree with the current working directory as root, type <code>:NERDTree</code>.</p>
+
+<p>If you want to open NERDTree with a specific folder as root, type <code>:NERDTree /path/to/folder</code>.</p>
+
+<p>Working with a big screen gives you the option to always have NERDTree open. When your screen real estate is smaller, you can toggle the NERDTree window with <code>:NERDTreeToggle</code>. If you know how to bind a command to a specific key combination, then you can easily switch NERDTree on or off.</p>
+
+<h3>Navigation</h3>
+
+<p>You can use the regular <a href="http://vim.wikia.com/wiki/Moving_around">Vim navigation keys</a> to move around in the tree. With me not being used to the Vim navigation keys, I tend to use the arrow keys. Yes, I know&hellip;</p>
+
+<h3>Folders</h3>
+
+<p>Folders are marked with a triangle in front of them. To open a folder, move to the corresponding line, and press <code>enter</code>. Closing a folder is the same key.</p>
+
+<p>When your cursor is on a file in a folder and you press <code>x</code>, the parent folder closes, placing your cursor on the line of the folder. Repeating <code>x</code> then closes the folder&rsquo;s parent, and so on.</p>
+
+<p>If your cursor is on a folder, and you want to close all subfolders recursively, hit <code>X</code> (capital x).</p>
+
+<h3>Files</h3>
+
+<p>After browsing your filesystem, the next thing you&rsquo;re probably going to is edit a file. To open a file in the last active window, navigate to the correspondig line in the NERDTree panel, and hit <code>enter</code>.</p>
+
+<p>Want to open the file in a new vertical split window? Hit <code>s</code>.</p>
+
+<p>If you&rsquo;re more of a horizontal split kind of person, hit <code>i</code> to open the file in a new horizontal split.</p>
+
+<p>And finally, if you prefer opening the file in a new tab, hit <code>t</code>.</p>
+
+<p>Using one of these methods above will open the file in your prefered split/tab, and immediately focus in the new split or tab. If you want to just open the file, but keep on navigating your filesystem, you can prefix the split commands with <code>g</code>: <code>gs</code>, <code>gi</code>. This is called a &ldquo;preview split&rdquo;. You can do the same with tabs, but then you&rsquo;d hit <code>T</code>.</p>
+
+<h3>Filesystem manipulations</h3>
+
+<p>With the NERDTree window active, press <code>m</code>. A menu appears with a list of manipulations available, such as creating a file/folder, moving a file/folder, &hellip;</p>
+
+<p>The most important thing to remember is: When you&rsquo;re creating a folder (<code>m</code> followed by <code>a</code>), don&rsquo;t forget to add a trailing / to the folder name. If you forget, a file with that name will be created instead of a folder.</p>
+
+<p><img class="center" src="http://miljar.github.io/images/2013-11-08/nerdtree_menu.png" title="NERDTree menu" ></p>
+
+<h2>Bookmarks</h2>
+
+<p>One of the features I like most, is the ability to create bookmarks in your filesystem. A bookmark simply allows you to create a tag for a specific location in NERDTree. Once you have created a bookmark, you can use <code>:NERDTree &lt;bookmark&gt;</code> to have the tree open at this specific location.</p>
+
+<p><em>Creating a bookmark</em>: Put your cursor on the file or folder you want to bookmark, and type <code>:Bookmark &lt;your bookmark name&gt;</code></p>
+
+<p><em>Toggle the bookmark table</em>: <code>B</code></p>
+
+<p><img class="center" src="http://miljar.github.io/images/2013-11-08/nerdtree_bookmarks.png" title="NERDTree bookmark table" >
+ <code>
+*Delete bookmark*: Go to the corresponding line in the bookmark table and hit</code>D`.</p>
+
+<h2>Final words</h2>
+
+<p>NERDTree makes it very easy to browse your filesystem. It should be one of the first plugins you install. Especiall if you come from an IDE, like me, it makes sense to have something available that you know from your IDE world.</p>
+
+<p>One last tip before closing this post: If you&rsquo;re tired of having to toggle NERDTree each time you fire up Vim, you can have it auto-opened for you. Just put the following in your <code>~/.vimrc</code>, reload Vim, and it&rsquo;s there! Beware: it can be annoying if you open Vim in the terminal. Mostly you&rsquo;re just editing one file, so then the NERDTree window is a bit useless.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">au</span> <span class="nb">VimEnter</span> *  NERDTree
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[VIM for IDE-people - part 2]]></title>
