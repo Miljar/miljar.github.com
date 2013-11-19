@@ -4,7 +4,6 @@ title: "VIM for IDE-people - part 2"
 date: 2013-09-24 16:25
 comments: true
 categories: [vim, macvim]
-published: false
 ---
 
 # Color Scheme: Solarized Plugin
@@ -32,7 +31,4 @@ colorscheme solarized
 If you want to reload your `~/.vimrc` configuration in your current Vim instance, hit `:` and type `so ~/.vimrc` + enter.
 
 {% img center /images/2013-09-24/screen-php-dark.png Vim Solarized %}
-
-# File System Explorer: NERDTree Plugin
-
 
