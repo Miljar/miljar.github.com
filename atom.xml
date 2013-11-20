@@ -4,7 +4,7 @@
   <title><![CDATA[Miljar - Tom Van Herreweghe]]></title>
   <link href="http://miljar.github.io/atom.xml" rel="self"/>
   <link href="http://miljar.github.io/"/>
-  <updated>2013-11-20T15:00:22+00:00</updated>
+  <updated>2013-11-20T15:02:45+00:00</updated>
   <id>http://miljar.github.io/</id>
   <author>
     <name><![CDATA[Tom Van Herreweghe]]></name>
@@ -41,7 +41,7 @@
 
 <p>But don&rsquo;t be fooled. It&rsquo;s just a syntax highlighter and indentation control. Other than printing your source code in pretty colors and in the correct indentation, it won&rsquo;t do much. If we want more, and we do want more, then we still need a plugin.</p>
 
-<h2>But we want more!</h2>
+<h2>So give me moar!</h2>
 
 <p>Enter <a href="https://github.com/scrooloose/syntastic">Syntastic</a>, created by Martin Grenfell, author of <a href="https://github.com/scrooloose/nerdtree">NERDTree</a>. What it does, is running your files through external syntax checkers. It then returns those errors and displays them to you. There are syntax checking plugins for a whole bunch of programming languages. Most important for me, is PHP support.</p>
 
