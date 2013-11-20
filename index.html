@@ -11,7 +11,7 @@
     <title>Miljar - Tom Van Herreweghe</title>
     <meta name="author" content="Tom Van Herreweghe">
     
-    <meta name="description" content="VIM for IDE-people - part 3 08 November 2013 16:40:00 vim macvim File system explorer: NERDTree When working with an IDE, you usually have a way of &hellip;">
+    <meta name="description" content="VIM for IDE-people - part 4 19 November 2013 17:36:00 vim macvim Syntax checking: Syntastic It&rsquo;s built-in dummy! A nice thing about an IDE is &hellip;">
     
     <meta name="viewport" content="width=device-width">
     
@@ -59,6 +59,130 @@
 
           
 
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/11/19/vim-for-ide-people-part-4/">VIM for IDE-people - part 4</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-11-19T17:36:00+00:00" pubdate data-updated="true"><i class="icon-calendar"></i> 19 November 2013 17:36:00</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/vim/">vim</a></li>
+    
+      <li><a href="/blog/categories/macvim/">macvim</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+  </div>
+  
+</header>
+
+
+
+
+<div class="entry-content clearfix">
+  <h1>Syntax checking: Syntastic</h1>
+
+<h2>It&rsquo;s built-in dummy!</h2>
+
+<p>A nice thing about an IDE is that it offers visual clues when editing source code files. It&rsquo;s quite hard to not notice a syntax error in an IDE. The astute Vim adept will immediately tell you syntax checking is built-in into Vim. No need for a plugin. And he&rsquo;s right, Vim comes with a built-in <a href="http://vimdoc.sourceforge.net/htmldoc/syntax.html">syntax checker</a> and <a href="http://vimdoc.sourceforge.net/htmldoc/filetype.html">indentation control</a>. You can enable those by adding the following settings to your <code>~/.vimrc</code> file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="c">&quot; Takes care of highlight</span>
+</span><span class='line'><span class="k">filetype</span> plugin <span class="k">on</span>
+</span><span class='line'><span class="nb">syntax</span> <span class="k">on</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&quot; Takes care of indentation</span>
+</span><span class='line'><span class="k">filetype</span> indent <span class="k">on</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But don&rsquo;t be fooled. It&rsquo;s just a syntax highlighter and indentation control. Other than printing your source code in pretty colors and in the correct indentation, it won&rsquo;t do much. If we want more, and we do want more, then we still need a plugin.</p>
+
+<h2>But we want more!</h2>
+
+<p>Enter <a href="https://github.com/scrooloose/syntastic">Syntastic</a>, created by Martin Grenfell, author of <a href="https://github.com/scrooloose/nerdtree">NERDTree</a>. What it does, is running your files through external syntax checkers. It then returns those errors and displays them to you. There are syntax checking plugins for a whole bunch of programming languages. Most important for me, is PHP support.</p>
+
+<p><img class="center" src="/images/2013-11-19/syntastic_1.png" title="Syntastic output" ></p>
+
+<p>When you write a file and it has syntax errors in it, Syntastic notifies you in a couple of ways:</p>
+
+<ol>
+<li>A mark next to the line where your syntax error is.</li>
+<li>When hovering over that marker or line, a balloon with the error messages comes up.</li>
+<li>A notification in the status bar. (Never mind that fancy status bar in the screenshot, I&rsquo;ll talk about it some other time.)</li>
+</ol>
+
+
+<h3>Installation</h3>
+
+<p>Quite easy with pathogen:</p>
+
+<pre><code>cd ~/.vim/bundle
+git clone https://github.com/scrooloose/syntastic.git
+</code></pre>
+
+<p>Restart Vim and you&rsquo;re all set.</p>
+
+<h3>Configuration</h3>
+
+<p>I&rsquo;m sorry, everything works out-of-the-box. So there&rsquo;s no configuration necessary.</p>
+
+<h3>PHP Checkers</h3>
+
+<p>I&rsquo;m a PHP guy, and code quality is important to me. Luckily, Syntastic can assist me. There is support for tools like <a href="https://github.com/squizlabs/PHP_CodeSniffer">PHPCS</a> and <a href="http://phpmd.org/">PHPMD</a>. To add these to Syntastic, add this to your <code>~/.vimrc</code> configuration file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">let</span> <span class="k">g</span>:syntastic_php_checkers<span class="p">=</span>[<span class="s1">&#39;php&#39;</span><span class="p">,</span> <span class="s1">&#39;phpcs&#39;</span><span class="p">,</span> <span class="s1">&#39;phpmd&#39;</span>]
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Syntastic will first use php lint. If no errors were found, the file is checked with PHPCS for coding standards fails. If there still are no errors, it uses PHPMD for mess detection. If you need help setting up these extra checkers, see <code>:help syntastic-checker-options</code>. Basically, you can override all the arguments for each checker by specifying the arguments in this standardized way: <code>let g:syntastic_&lt;filetype&gt;_&lt;subchecker&gt;_args="&lt;cli args&gt;"</code>. Very neat to specify e.g. the coding standards you want your file to adhere to.</p>
+
+<h2>Final words</h2>
+
+<p>Syntastic comes well configured out-of-the-box. That&rsquo;s what makes it so easy to use. Once it&rsquo;s installed, you can just forget about it. If for some reason, you need a checker that&rsquo;s not available, it should be fairly easy to create your own. Even without much of VimL knowledge. Just read the <a href="https://github.com/scrooloose/syntastic/wiki/Syntax-Checker-Guide">project wiki</a> and write your missing checker. Don&rsquo;t forget to share it with the rest of use, right?</p>
+
+
+  <a class="btn pull-right" href="/blog/2013/11/19/vim-for-ide-people-part-4/">Read on &rarr;</a>
+</div>
+
+  </article>
+  <hr>
 
   
   <article class="listing">
@@ -743,6 +867,10 @@ git clone https://github.com/scrooloose/nerdtree.git
   <section id="recent-posts" class="aside-module grid__item one-whole lap-one-half">
   <h1 class="title delta">Recent Posts</h1>
   <ul class="divided">
+    
+      <li class="post">
+        <a href="/blog/2013/11/19/vim-for-ide-people-part-4/">VIM for IDE-people - part 4</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/11/08/vim-for-ide-people-part-3/">VIM for IDE-people - part 3</a>
