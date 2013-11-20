@@ -4,7 +4,7 @@
   <title><![CDATA[Category: macvim | Miljar - Tom Van Herreweghe]]></title>
   <link href="http://miljar.github.io/blog/categories/macvim/atom.xml" rel="self"/>
   <link href="http://miljar.github.io/"/>
-  <updated>2013-11-20T11:54:04+00:00</updated>
+  <updated>2013-11-20T11:56:54+00:00</updated>
   <id>http://miljar.github.io/</id>
   <author>
     <name><![CDATA[Tom Van Herreweghe]]></name>
@@ -102,7 +102,8 @@ git clone https://github.com/scrooloose/nerdtree.git
 au VimEnter *  NERDTree
 </code></p>
 
-<p># Vim For IDE-people
+<p><!-- more -->
+# Vim For IDE-people
 
 This article is part of the series "Vim For IDE-people". The other articles in the list are:
 
@@ -144,7 +145,8 @@ colorscheme solarized
 
 <p><img class="center" src="/images/2013-09-24/screen-php-dark.png" title="Vim Solarized" ></p>
 
-<p># Vim For IDE-people
+<p><!-- more -->
+# Vim For IDE-people
 
 This article is part of the series "Vim For IDE-people". The other articles in the list are:
 
@@ -234,7 +236,8 @@ set fileencodings=utf-8,ucs-bom,cp1250,iso-8859-1
 
 <p><strong>Update 20/09/2013</strong> It has come to my attention that the examples of supposedly lacking features are actually available right off the bat in Vim. They&rsquo;re just a bit deeper in the documentation. The things I should have mentioned were: git integration, auto-complete with the <code>tab</code> key, automatically adding closing angles, &hellip;</p>
 
-<p># Vim For IDE-people
+<p><!-- more -->
+# Vim For IDE-people
 
 This article is part of the series "Vim For IDE-people". The other articles in the list are:
 

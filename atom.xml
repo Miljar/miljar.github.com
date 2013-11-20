@@ -4,7 +4,7 @@
   <title><![CDATA[Miljar - Tom Van Herreweghe]]></title>
   <link href="http://miljar.github.io/atom.xml" rel="self"/>
   <link href="http://miljar.github.io/"/>
-  <updated>2013-11-20T11:54:04+00:00</updated>
+  <updated>2013-11-20T11:56:54+00:00</updated>
   <id>http://miljar.github.io/</id>
   <author>
     <name><![CDATA[Tom Van Herreweghe]]></name>
@@ -103,6 +103,11 @@ git clone https://github.com/scrooloose/nerdtree.git
 </span></code></pre></td></tr></table></div></figure>
 
 
+
+
+<!-- more -->
+
+
 <h1>Vim For IDE-people</h1>
 
 <p>This article is part of the series &ldquo;Vim For IDE-people&rdquo;. The other articles in the list are:</p>
@@ -152,6 +157,9 @@ git clone https://github.com/scrooloose/nerdtree.git
 <p>If you want to reload your <code>~/.vimrc</code> configuration in your current Vim instance, hit <code>:</code> and type <code>so ~/.vimrc</code> + enter.</p>
 
 <p><img class="center" src="http://miljar.github.io/images/2013-09-24/screen-php-dark.png" title="Vim Solarized" ></p>
+
+<!-- more -->
+
 
 <h1>Vim For IDE-people</h1>
 
@@ -270,6 +278,9 @@ git clone https://github.com/scrooloose/nerdtree.git
 <p>My goal is to stop using an IDE alltogether, and use Vim for all my source code editing. It won&rsquo;t be an easy task, but if others can manage it, then so can I. By blogging about my experiences, I hope I can help other people with their struggles.</p>
 
 <p><strong>Update 20/09/2013</strong> It has come to my attention that the examples of supposedly lacking features are actually available right off the bat in Vim. They&rsquo;re just a bit deeper in the documentation. The things I should have mentioned were: git integration, auto-complete with the <code>tab</code> key, automatically adding closing angles, &hellip;</p>
+
+<!-- more -->
+
 
 <h1>Vim For IDE-people</h1>
 
