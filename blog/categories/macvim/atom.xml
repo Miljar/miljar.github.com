@@ -4,7 +4,7 @@
   <title><![CDATA[Category: macvim | Miljar - Tom Van Herreweghe]]></title>
   <link href="http://miljar.github.io/blog/categories/macvim/atom.xml" rel="self"/>
   <link href="http://miljar.github.io/"/>
-  <updated>2013-11-15T13:59:28+00:00</updated>
+  <updated>2013-11-20T11:54:04+00:00</updated>
   <id>http://miljar.github.io/</id>
   <author>
     <name><![CDATA[Tom Van Herreweghe]]></name>
@@ -101,6 +101,15 @@ git clone https://github.com/scrooloose/nerdtree.git
 <p><code>vim
 au VimEnter *  NERDTree
 </code></p>
+
+<p># Vim For IDE-people
+
+This article is part of the series "Vim For IDE-people". The other articles in the list are:
+
+1. [Basic Vim configuration and plugins](http://miljar.github.io/blog/2013/09/18/vim-for-ide-people-part-1/)
+2. [Solarized color scheme](http://miljar.github.io/blog/2013/09/24/vim-for-ide-people-part-2/)
+3. [File system explorer: NERDTree](http://miljar.github.io/blog/2013/11/08/vim-for-ide-people-part-3/)
+</p>
 ]]></content>
   </entry>
   
@@ -134,6 +143,15 @@ colorscheme solarized
 <p>If you want to reload your <code>~/.vimrc</code> configuration in your current Vim instance, hit <code>:</code> and type <code>so ~/.vimrc</code> + enter.</p>
 
 <p><img class="center" src="/images/2013-09-24/screen-php-dark.png" title="Vim Solarized" ></p>
+
+<p># Vim For IDE-people
+
+This article is part of the series "Vim For IDE-people". The other articles in the list are:
+
+1. [Basic Vim configuration and plugins](http://miljar.github.io/blog/2013/09/18/vim-for-ide-people-part-1/)
+2. [Solarized color scheme](http://miljar.github.io/blog/2013/09/24/vim-for-ide-people-part-2/)
+3. [File system explorer: NERDTree](http://miljar.github.io/blog/2013/11/08/vim-for-ide-people-part-3/)
+</p>
 ]]></content>
   </entry>
   
@@ -215,6 +233,15 @@ set fileencodings=utf-8,ucs-bom,cp1250,iso-8859-1
 <p>My goal is to stop using an IDE alltogether, and use Vim for all my source code editing. It won&rsquo;t be an easy task, but if others can manage it, then so can I. By blogging about my experiences, I hope I can help other people with their struggles.</p>
 
 <p><strong>Update 20/09/2013</strong> It has come to my attention that the examples of supposedly lacking features are actually available right off the bat in Vim. They&rsquo;re just a bit deeper in the documentation. The things I should have mentioned were: git integration, auto-complete with the <code>tab</code> key, automatically adding closing angles, &hellip;</p>
+
+<p># Vim For IDE-people
+
+This article is part of the series "Vim For IDE-people". The other articles in the list are:
+
+1. [Basic Vim configuration and plugins](http://miljar.github.io/blog/2013/09/18/vim-for-ide-people-part-1/)
+2. [Solarized color scheme](http://miljar.github.io/blog/2013/09/24/vim-for-ide-people-part-2/)
+3. [File system explorer: NERDTree](http://miljar.github.io/blog/2013/11/08/vim-for-ide-people-part-3/)
+</p>
 ]]></content>
   </entry>
   
