@@ -40,4 +40,8 @@
         <loc>http://miljar.github.io/robots.txt</loc>
         <lastmod>2013-09-25T18:13:13+00:00</lastmod>
     </url>
+    <url>
+        <loc>http://miljar.github.io/vim-for-ide-people/</loc>
+        <lastmod>2013-11-20T14:55:24+00:00</lastmod>
+    </url>
 </urlset>

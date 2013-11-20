@@ -4,7 +4,7 @@
   <title><![CDATA[Category: macvim | Miljar - Tom Van Herreweghe]]></title>
   <link href="http://miljar.github.io/blog/categories/macvim/atom.xml" rel="self"/>
   <link href="http://miljar.github.io/"/>
-  <updated>2013-11-20T11:56:54+00:00</updated>
+  <updated>2013-11-20T14:58:01+00:00</updated>
   <id>http://miljar.github.io/</id>
   <author>
     <name><![CDATA[Tom Van Herreweghe]]></name>
@@ -110,6 +110,8 @@ This article is part of the series "Vim For IDE-people". The other articles in t
 1. [Basic Vim configuration and plugins](http://miljar.github.io/blog/2013/09/18/vim-for-ide-people-part-1/)
 2. [Solarized color scheme](http://miljar.github.io/blog/2013/09/24/vim-for-ide-people-part-2/)
 3. [File system explorer: NERDTree](http://miljar.github.io/blog/2013/11/08/vim-for-ide-people-part-3/)
+4. [Syntax checking: Syntastic](http://miljar.github.io/blog/2013/11/19/vim-for-ide-people-part-4/)
+
 </p>
 ]]></content>
   </entry>
@@ -153,6 +155,8 @@ This article is part of the series "Vim For IDE-people". The other articles in t
 1. [Basic Vim configuration and plugins](http://miljar.github.io/blog/2013/09/18/vim-for-ide-people-part-1/)
 2. [Solarized color scheme](http://miljar.github.io/blog/2013/09/24/vim-for-ide-people-part-2/)
 3. [File system explorer: NERDTree](http://miljar.github.io/blog/2013/11/08/vim-for-ide-people-part-3/)
+4. [Syntax checking: Syntastic](http://miljar.github.io/blog/2013/11/19/vim-for-ide-people-part-4/)
+
 </p>
 ]]></content>
   </entry>
@@ -244,6 +248,8 @@ This article is part of the series "Vim For IDE-people". The other articles in t
 1. [Basic Vim configuration and plugins](http://miljar.github.io/blog/2013/09/18/vim-for-ide-people-part-1/)
 2. [Solarized color scheme](http://miljar.github.io/blog/2013/09/24/vim-for-ide-people-part-2/)
 3. [File system explorer: NERDTree](http://miljar.github.io/blog/2013/11/08/vim-for-ide-people-part-3/)
+4. [Syntax checking: Syntastic](http://miljar.github.io/blog/2013/11/19/vim-for-ide-people-part-4/)
+
 </p>
 ]]></content>
   </entry>
