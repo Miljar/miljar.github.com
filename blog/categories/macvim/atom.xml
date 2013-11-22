@@ -4,7 +4,7 @@
   <title><![CDATA[Category: macvim | Miljar - Tom Van Herreweghe]]></title>
   <link href="http://miljar.github.io/blog/categories/macvim/atom.xml" rel="self"/>
   <link href="http://miljar.github.io/"/>
-  <updated>2013-11-22T07:57:03+00:00</updated>
+  <updated>2013-11-22T07:59:07+00:00</updated>
   <id>http://miljar.github.io/</id>
   <author>
     <name><![CDATA[Tom Van Herreweghe]]></name>
@@ -50,7 +50,7 @@ set noexpandtab</p>
 <p>&ldquo; Do replace an indentation by 4 spaces
 "set expandtab</p>
 
-<p>&ldquo; Use 4 spaces when hitting Tab in insert mode
+<p>&ldquo; Use 4 columns when hitting Tab in insert mode
 set softtabstop=4
 ```</p>
 
