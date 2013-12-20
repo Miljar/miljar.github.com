@@ -4,7 +4,7 @@
   <title><![CDATA[Miljar - Tom Van Herreweghe]]></title>
   <link href="http://miljar.github.io/atom.xml" rel="self"/>
   <link href="http://miljar.github.io/"/>
-  <updated>2013-11-22T07:59:07+00:00</updated>
+  <updated>2013-12-20T14:12:01+00:00</updated>
   <id>http://miljar.github.io/</id>
   <author>
     <name><![CDATA[Tom Van Herreweghe]]></name>
@@ -12,6 +12,206 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[PHPUnit: Testing The Constructor]]></title>
+    <link href="http://miljar.github.io/blog/2013/12/20/phpunit-testing-the-constructor/"/>
+    <updated>2013-12-20T16:00:00+00:00</updated>
+    <id>http://miljar.github.io/blog/2013/12/20/phpunit-testing-the-constructor</id>
+    <content type="html"><![CDATA[<p>In a previous blog post I explained how you could <a href="http://miljar.github.io/2013/09/11/phpunit-mocking-the-system-under-test/">mock the system under test</a>. This allows you to easily verify if a given method calls other methods in the same class.</p>
+
+<p>What if you wanted to verify this from the constructor?</p>
+
+<h1>Normal classes</h1>
+
+<figure class='code'><figcaption><span>Example Car class</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">Car</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="sd">/**</span>
+</span><span class='line'><span class="sd">  * @var int</span>
+</span><span class='line'><span class="sd">  */</span>
+</span><span class='line'>  <span class="k">protected</span> <span class="nv">$doors</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="sd">/**</span>
+</span><span class='line'><span class="sd">  * Class constructor</span>
+</span><span class='line'><span class="sd">  *</span>
+</span><span class='line'><span class="sd">  * @return void</span>
+</span><span class='line'><span class="sd">  */</span>
+</span><span class='line'>  <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nv">$doors</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">setDoors</span><span class="p">(</span><span class="nv">$doors</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="sd">/**</span>
+</span><span class='line'><span class="sd">  * Setter for the doors</span>
+</span><span class='line'><span class="sd">  *</span>
+</span><span class='line'><span class="sd">  * @param int $doors</span>
+</span><span class='line'><span class="sd">  * @return void</span>
+</span><span class='line'><span class="sd">  */</span>
+</span><span class='line'>  <span class="k">public</span> <span class="k">function</span> <span class="nf">setDoors</span><span class="p">(</span><span class="nv">$doors</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">doors</span> <span class="o">=</span> <span class="nv">$doors</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The constructor is a <a href="http://www.php.net/manual/en/language.oop5.magic.php">magic function</a> in your class and is invoked when you create a new instance of said class. You don&rsquo;t explicitly call the constructor method.</p>
+
+<p>Being a meticulous developer and trying to reach 100% unit test coverage, I explicitly want to verify if the constructor calls <code>setDoors</code>. One solution would be the following:</p>
+
+<figure class='code'><figcaption><span>Unit test for the Car class constructor</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">class</span> <span class="nc">CarTest</span> <span class="k">extends</span> <span class="nx">PHPUnit_Framework_TestCase</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">public</span> <span class="k">function</span> <span class="nf">testConstructorCallsInternalMethods</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="nv">$classname</span> <span class="o">=</span> <span class="s1">&#39;Car&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// Get mock, without the constructor being called</span>
+</span><span class='line'>      <span class="nv">$mock</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMockBuilder</span><span class="p">(</span><span class="nv">$classname</span><span class="p">)</span>
+</span><span class='line'>          <span class="o">-&gt;</span><span class="na">disableOriginalConstructor</span><span class="p">()</span>
+</span><span class='line'>          <span class="o">-&gt;</span><span class="na">getMock</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// set expectations for constructor calls</span>
+</span><span class='line'>      <span class="nv">$mock</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">once</span><span class="p">())</span>
+</span><span class='line'>          <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;setDoors&#39;</span><span class="p">)</span>
+</span><span class='line'>          <span class="o">-&gt;</span><span class="na">with</span><span class="p">(</span>
+</span><span class='line'>                  <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">equalTo</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span><span class='line'>                <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// now call the constructor</span>
+</span><span class='line'>      <span class="nv">$reflectedClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ReflectionClass</span><span class="p">(</span><span class="nv">$classname</span><span class="p">);</span>
+</span><span class='line'>      <span class="nv">$constructor</span> <span class="o">=</span> <span class="nv">$reflectedClass</span><span class="o">-&gt;</span><span class="na">getConstructor</span><span class="p">();</span>
+</span><span class='line'>      <span class="nv">$constructor</span><span class="o">-&gt;</span><span class="na">invoke</span><span class="p">(</span><span class="nv">$mock</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>First thing I do, is create a mock object for the Car class, but I request that the constructor is not called with <code>disableOriginalConstructor</code>.
+Next I set the expectations for my mock object: verify that the <code>setDoors</code> method is called with 4 as an argument.
+Lastly, through <a href="http://php.net/language.oop5.reflection">reflection</a> I get a reflection method for the constructor, which I then invoke for the mock object and correct argument.</p>
+
+<h1>Abstract classes</h1>
+
+<p>For regular classes, the method described above seems straightforward. When dealing with <a href="http://www.php.net/manual/en/language.oop5.abstract.php">abstract classes</a>, mocking needs some more attention.</p>
+
+<p><a href="https://github.com/sebastianbergmann/phpunit/">PHPUnit</a> provides us with a <code>getMockForAbstractClass</code> method, which conveniently creates a mock for an abstract class. What&rsquo;s in a name. Now where the regular <code>getMock</code> method doesn&rsquo;t mock any method unless you specify the ones you want, <code>getMockForAbstractClass</code> by default mocks the abstract methods so you can test the concrete methods.</p>
+
+<p>So far things are logical. If you try the same approach as above for abstract classes, exchanging the <code>-&gt;getMock()</code> for <code>-&gt;getMockForAbstractClass()</code>, you end up with a disappointment. The mock tells you that the internal method wasn&rsquo;t called. Odd. Doing some var_dump-driven-development tells you that the method <em>is</em> called. However, it&rsquo;s not reflected in the mock.</p>
+
+<p>How to fix?</p>
+
+<figure class='code'><figcaption><span>Unit test for abstract Car class</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">class</span> <span class="nc">CarTest</span> <span class="k">extends</span> <span class="nx">PHPUnit_Framework_TestCase</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">public</span> <span class="k">function</span> <span class="nf">testConstructorCallsInternalMethods</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="nv">$classname</span> <span class="o">=</span> <span class="s1">&#39;Car&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// Get mock, without the constructor being called</span>
+</span><span class='line'>      <span class="nv">$mock</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMockBuilder</span><span class="p">(</span><span class="nv">$classname</span><span class="p">)</span>
+</span><span class='line'>          <span class="o">-&gt;</span><span class="na">disableOriginalConstructor</span><span class="p">()</span>
+</span><span class='line'>          <span class="o">-&gt;</span><span class="na">setMethods</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;setDoors&#39;</span><span class="p">))</span>
+</span><span class='line'>          <span class="o">-&gt;</span><span class="na">getMockForAbstractClass</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// set expectations for constructor calls</span>
+</span><span class='line'>      <span class="nv">$mock</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">once</span><span class="p">())</span>
+</span><span class='line'>          <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;setDoors&#39;</span><span class="p">)</span>
+</span><span class='line'>          <span class="o">-&gt;</span><span class="na">with</span><span class="p">(</span>
+</span><span class='line'>                  <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">equalTo</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span><span class='line'>                <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// now call the constructor</span>
+</span><span class='line'>      <span class="nv">$reflectedClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ReflectionClass</span><span class="p">(</span><span class="nv">$classname</span><span class="p">);</span>
+</span><span class='line'>      <span class="nv">$constructor</span> <span class="o">=</span> <span class="nv">$reflectedClass</span><span class="o">-&gt;</span><span class="na">getConstructor</span><span class="p">();</span>
+</span><span class='line'>      <span class="nv">$constructor</span><span class="o">-&gt;</span><span class="na">invoke</span><span class="p">(</span><span class="nv">$mock</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Tadaa! For an abstract class, we explicitly have to define the list of methods we want to stub.</p>
+
+<p>Come to think of it, this is actually logical behavior, as this is how regular mocking works. What&rsquo;s not logical, is that it works for normal classes without the list of methods you want to stub. So just to be on the safe side (and to have some kind of pattern), just always provide a list of methods. At least, that&rsquo;s what I&rsquo;m going to do from now on.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[VIM for IDE-people - part 4]]></title>
