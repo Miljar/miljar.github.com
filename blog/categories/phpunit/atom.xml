@@ -4,7 +4,7 @@
   <title><![CDATA[Category: phpunit | Miljar - Tom Van Herreweghe]]></title>
   <link href="http://miljar.github.io/blog/categories/phpunit/atom.xml" rel="self"/>
   <link href="http://miljar.github.io/"/>
-  <updated>2013-12-20T14:12:01+00:00</updated>
+  <updated>2014-01-30T08:38:54+00:00</updated>
   <id>http://miljar.github.io/</id>
   <author>
     <name><![CDATA[Tom Van Herreweghe]]></name>
@@ -12,6 +12,147 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[PHPUnit: Testing static calls]]></title>
+    <link href="http://miljar.github.io/blog/2014/01/29/phpunit-testing-static-calls/"/>
+    <updated>2014-01-29T19:32:00+00:00</updated>
+    <id>http://miljar.github.io/blog/2014/01/29/phpunit-testing-static-calls</id>
+    <content type="html"><![CDATA[<p>When you&rsquo;re writing code, sometimes it&rsquo;s necessary to use static calls. Maybe the only way to interface with an external library is through static calls. I must admit, it&rsquo;s just easy to work with a static call. Until you have to assert in a unit test that you&rsquo;re actually calling the static method. Then it gets more difficult.</p>
+
+<h1>Stubbing and mocking internal static methods</h1>
+
+<p>As Sebastian Bergmann explains in <a href="http://sebastian-bergmann.de/archives/883-Stubbing-and-Mocking-Static-Methods.html">one of his blogposts</a>, since PHPUnit 3.5 it&rsquo;s possible to stub &amp; mock static methods. <em>In the same class</em>. Here&rsquo;s how it goes.</p>
+
+<p>``` php Sample class with internal static method call
+&lt;?php
+class Foo
+{</p>
+
+<pre><code>public static function bar()
+{
+    // some logic here, and then...
+    static::baz($somevar);
+
+    return 'bar';
+}
+
+public static function baz($somevar)
+{
+    // some more logic
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>The unit test goes like this:</p>
+
+<p>``` php Unit test internal static method call
+&lt;?php
+class FooTest extends \PHPUnit_Framework_TestCase
+{</p>
+
+<pre><code>public function testBar()
+{
+    $class = $this-&gt;getMockClass('Foo', array('baz'));
+
+    $class::staticExpects($this-&gt;any())
+        -&gt;method('baz')
+        -&gt;with($this-&gt;equalTo('somevar value'));
+
+    $this-&gt;assertEquals('bar', $class::bar());
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>So what happens here? The key is that we have 2 static methods, and in the first static method we do a static call to the second static method. All in the same class.</p>
+
+<p>We tell the <code>getMockClass</code> method to give us a mock classname for our Foo class, and we want to stub method <code>baz</code>. Once we have this classname, we can use <code>staticExpects</code> for our expectations.</p>
+
+<p>Then we do our regular static call to the <code>bar</code> method. But instead of doing it on our <code>Foo</code> class, we do it on the mock classname. As such, the mock can use the stub we created when internally <code>static::baz</code> is called.</p>
+
+<h1>Stubbing and mocking external static methods</h1>
+
+<p>So far that wasn&rsquo;t too difficult. But how many times have you written code like this? Personally, I don&rsquo;t ever write code like that. However, sometimes I have to work with an external library and then static calls might be the only available interface.</p>
+
+<p>``` php Sample class with external static method call
+&lt;?php
+class Foo
+{</p>
+
+<pre><code>public function bar()
+{
+    // some logic here, and then...
+
+    Log::message('We have just executed Foo::bar()');
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>As you can see, the interface to the Log class makes us use a static call to log a message. Assume that you want to know if you actually do the <code>Log::message</code> call in a unit test, then we&rsquo;re screwed since the static call is external.</p>
+
+<p>There is a way around that. It&rsquo;s a hassle and it&rsquo;s not beautiful. First we have to refactor the external static call a bit:</p>
+
+<p>``` php Sample class with external static method call
+&lt;?php
+class Foo
+{</p>
+
+<pre><code>protected $loggingClass = 'Log';
+
+public function bar()
+{
+    // some logic here, and then...
+
+    forward_static_call_array(
+        array($this-&gt;loggingClass, 'message'),
+        array('We have just executed Foo::bar()');
+    );
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>Instead of calling <code>Log::mesage</code> directly, we use <a href="http://php.net/forward_static_call_array">forward_static_call_array</a>. The name of our log class is now defined in a property, and we use that property in the <code>forward_static_call_array</code> method. Can you see where this is going? We&rsquo;re kind of injecting the Log classname dependency. Not pretty, but it works!</p>
+
+<p>``` php Unit test external static method call
+&lt;?php
+class FooTest extends \PHPUnit_Framework_TestCase
+{</p>
+
+<pre><code>public function testBar()
+{
+    // create a mock class with expectations
+    $class = $this-&gt;getMockClass('Log', array('message'));
+    $class::staticExpects($this-&gt;once())
+        -&gt;method('message');
+
+    $foo = new Foo();
+
+    // set the mock classname in the property
+    $reflProp = new \ReflectionProperty('Foo', 'loggingClass');
+    $reflProp-&gt;setAccessible(true);
+    $reflProp-&gt;setValue($foo, $class);
+
+    // call bar()
+    $foo-&gt;bar();
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>Same as before, we use <code>getMockClass</code> to get a mock classname for the Log class. Then we set this classname in our <code>$loggingClass</code> property. Since it&rsquo;s a protected property, I can only do that through <a href="http://www.php.net/manual/en/book.reflection.php">Reflection</a>. I just made the property protected to make it more difficult ;&ndash;).</p>
+
+<p>So here we go, we were able to test an external static method call. It&rsquo;s up to you to decide if you want to refactor your code like this. And it&rsquo;s also up to you to decide if you want to actually assert these kinds of calls. I agree, we don&rsquo;t really want to verify a call to a logger. But that was just an example.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[PHPUnit: Testing The Constructor]]></title>

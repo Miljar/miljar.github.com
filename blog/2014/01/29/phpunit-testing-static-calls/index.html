@@ -1,0 +1,470 @@
+
+
+<!doctype html>
+  <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+  <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+  <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+  <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>PHPUnit: Testing static calls - Miljar - Tom Van Herreweghe</title>
+    <meta name="author" content="Tom Van Herreweghe">
+    
+    <meta name="description" content="PHPUnit: Testing static calls 29 January 2014 19:32:00 php phpunit unit testing When you&rsquo;re writing code, sometimes it&rsquo;s necessary to &hellip;">
+    
+    <meta name="viewport" content="width=device-width">
+    
+    <link rel="canonical" href="http://miljar.github.io/blog/2014/01/29/phpunit-testing-static-calls">
+    <link href="/favicon.png" rel="icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet">
+    <link href="//atom.xml" rel="alternate" title="Miljar - Tom Van Herreweghe" type="application/atom+xml">
+  </head>
+
+
+  <body >
+
+    <header>
+      <div class="grid-wrapper">
+  <div class="grid">
+
+    <div class="grid__item two-fifths lap-four-sixths palm-one-whole">
+  <a href="/" class="site-title">Miljar - Tom Van Herreweghe</a>
+</div>
+
+<div class="grid__item three-fifths lap-two-sixths palm-one-whole">
+  <nav>
+    <input type="checkbox" id="toggle">
+<label for="toggle" class="toggle" data-open="Main Menu" data-close="Close Menu"></label>
+<ul class="menu pull-right">
+  <li><a href="/">Home</a></li>
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/vim-for-ide-people/">Vim for IDE-people</a></li>
+</ul>
+
+  </nav>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+    <div class="grid-wrapper">
+      <div class="grid grid-center">
+        
+        <div class="grid__item two-thirds lap-one-whole palm-one-whole">
+        
+
+          <article class="post">
+  <header>
+  
+  <h1 class="title indent">PHPUnit: Testing static calls</h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2014-01-29T19:32:00+00:00" pubdate data-updated="true"><i class="icon-calendar"></i> 29 January 2014 19:32:00</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/php/">php</a></li>
+    
+      <li><a href="/blog/categories/phpunit/">phpunit</a></li>
+    
+      <li><a href="/blog/categories/unit testing/">unit testing</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+  </div>
+  
+</header>
+
+
+
+
+  <p>When you&rsquo;re writing code, sometimes it&rsquo;s necessary to use static calls. Maybe the only way to interface with an external library is through static calls. I must admit, it&rsquo;s just easy to work with a static call. Until you have to assert in a unit test that you&rsquo;re actually calling the static method. Then it gets more difficult.</p>
+
+<h1>Stubbing and mocking internal static methods</h1>
+
+<p>As Sebastian Bergmann explains in <a href="http://sebastian-bergmann.de/archives/883-Stubbing-and-Mocking-Static-Methods.html">one of his blogposts</a>, since PHPUnit 3.5 it&rsquo;s possible to stub &amp; mock static methods. <em>In the same class</em>. Here&rsquo;s how it goes.</p>
+
+<figure class='code'><figcaption><span>Sample class with internal static method call</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">Foo</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">bar</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="c1">// some logic here, and then...</span>
+</span><span class='line'>      <span class="k">static</span><span class="o">::</span><span class="na">baz</span><span class="p">(</span><span class="nv">$somevar</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">return</span> <span class="s1">&#39;bar&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">baz</span><span class="p">(</span><span class="nv">$somevar</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="c1">// some more logic</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The unit test goes like this:</p>
+
+<figure class='code'><figcaption><span>Unit test internal static method call</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">FooTest</span> <span class="k">extends</span> <span class="nx">\PHPUnit_Framework_TestCase</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">public</span> <span class="k">function</span> <span class="nf">testBar</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="nv">$class</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMockClass</span><span class="p">(</span><span class="s1">&#39;Foo&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;baz&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nv">$class</span><span class="o">::</span><span class="na">staticExpects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">any</span><span class="p">())</span>
+</span><span class='line'>          <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;baz&#39;</span><span class="p">)</span>
+</span><span class='line'>          <span class="o">-&gt;</span><span class="na">with</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">equalTo</span><span class="p">(</span><span class="s1">&#39;somevar value&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="nv">$class</span><span class="o">::</span><span class="na">bar</span><span class="p">());</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So what happens here? The key is that we have 2 static methods, and in the first static method we do a static call to the second static method. All in the same class.</p>
+
+<p>We tell the <code>getMockClass</code> method to give us a mock classname for our Foo class, and we want to stub method <code>baz</code>. Once we have this classname, we can use <code>staticExpects</code> for our expectations.</p>
+
+<p>Then we do our regular static call to the <code>bar</code> method. But instead of doing it on our <code>Foo</code> class, we do it on the mock classname. As such, the mock can use the stub we created when internally <code>static::baz</code> is called.</p>
+
+<h1>Stubbing and mocking external static methods</h1>
+
+<p>So far that wasn&rsquo;t too difficult. But how many times have you written code like this? Personally, I don&rsquo;t ever write code like that. However, sometimes I have to work with an external library and then static calls might be the only available interface.</p>
+
+<figure class='code'><figcaption><span>Sample class with external static method call</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">Foo</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">public</span> <span class="k">function</span> <span class="nf">bar</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="c1">// some logic here, and then...</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nx">Log</span><span class="o">::</span><span class="na">message</span><span class="p">(</span><span class="s1">&#39;We have just executed Foo::bar()&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see, the interface to the Log class makes us use a static call to log a message. Assume that you want to know if you actually do the <code>Log::message</code> call in a unit test, then we&rsquo;re screwed since the static call is external.</p>
+
+<p>There is a way around that. It&rsquo;s a hassle and it&rsquo;s not beautiful. First we have to refactor the external static call a bit:</p>
+
+<figure class='code'><figcaption><span>Sample class with external static method call</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">Foo</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">protected</span> <span class="nv">$loggingClass</span> <span class="o">=</span> <span class="s1">&#39;Log&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">public</span> <span class="k">function</span> <span class="nf">bar</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="c1">// some logic here, and then...</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nb">forward_static_call_array</span><span class="p">(</span>
+</span><span class='line'>          <span class="k">array</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">loggingClass</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">),</span>
+</span><span class='line'>          <span class="k">array</span><span class="p">(</span><span class="s1">&#39;We have just executed Foo::bar()&#39;</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Instead of calling <code>Log::mesage</code> directly, we use <a href="http://php.net/forward_static_call_array">forward_static_call_array</a>. The name of our log class is now defined in a property, and we use that property in the <code>forward_static_call_array</code> method. Can you see where this is going? We&rsquo;re kind of injecting the Log classname dependency. Not pretty, but it works!</p>
+
+<figure class='code'><figcaption><span>Unit test external static method call</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">FooTest</span> <span class="k">extends</span> <span class="nx">\PHPUnit_Framework_TestCase</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">public</span> <span class="k">function</span> <span class="nf">testBar</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>      <span class="c1">// create a mock class with expectations</span>
+</span><span class='line'>        <span class="nv">$class</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMockClass</span><span class="p">(</span><span class="s1">&#39;Log&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">));</span>
+</span><span class='line'>        <span class="nv">$class</span><span class="o">::</span><span class="na">staticExpects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">once</span><span class="p">())</span>
+</span><span class='line'>          <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nv">$foo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Foo</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// set the mock classname in the property</span>
+</span><span class='line'>      <span class="nv">$reflProp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\ReflectionProperty</span><span class="p">(</span><span class="s1">&#39;Foo&#39;</span><span class="p">,</span> <span class="s1">&#39;loggingClass&#39;</span><span class="p">);</span>
+</span><span class='line'>      <span class="nv">$reflProp</span><span class="o">-&gt;</span><span class="na">setAccessible</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+</span><span class='line'>      <span class="nv">$reflProp</span><span class="o">-&gt;</span><span class="na">setValue</span><span class="p">(</span><span class="nv">$foo</span><span class="p">,</span> <span class="nv">$class</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// call bar()</span>
+</span><span class='line'>      <span class="nv">$foo</span><span class="o">-&gt;</span><span class="na">bar</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Same as before, we use <code>getMockClass</code> to get a mock classname for the Log class. Then we set this classname in our <code>$loggingClass</code> property. Since it&rsquo;s a protected property, I can only do that through <a href="http://www.php.net/manual/en/book.reflection.php">Reflection</a>. I just made the property protected to make it more difficult ;&ndash;).</p>
+
+<p>So here we go, we were able to test an external static method call. It&rsquo;s up to you to decide if you want to refactor your code like this. And it&rsquo;s also up to you to decide if you want to actually assert these kinds of calls. I agree, we don&rsquo;t really want to verify a call to a logger. But that was just an example.</p>
+
+
+</article>
+
+ 
+<section id="disqus">
+  <h1 class="indent title">Comments</h1>
+  <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+        
+        </div>
+        
+        
+        <aside id="sidebar" class="grid__item one-third lap-one-whole palm-one-whole">
+          <div class="grid">
+
+	<section class="aside-module grid__item one-whole lap-one-half">
+		<h1 class="title delta">Mugshot</h1>
+		<img class="gravatar" src="/images/gravatar.jpg" alt="Tom Van Herreweghe's Picture" data-gravatar="tom@theanalogguy.be">
+	</section>
+
+  
+<section class="social aside-module grid__item one-whole lap-one-half">
+  <h1 class="title delta">
+    Social stuff
+  </h1>
+  <ul class="unstyled">
+    
+    
+    <li><a class="github" href="//github.com/miljar"><i class="icon-github"></i> Github</a></li>
+    
+    <li><a class="gplus" href="//plus.google.com/109699955996369519315"><i class="icon-google-plus-sign"></i> Google+</a></li>
+    <li><a class="linkedin" href="//linkedin.com/in/tomvanherreweghe"><i class="icon-linkedin-sign"></i> LinkedIn</a></li>
+    
+    
+    <li><a class="twitter" href="//twitter.com/miljar"><i class="icon-twitter"></i> Twitter</a></li>
+    
+  </ul>
+</section>
+
+
+  <section id="recent-posts" class="aside-module grid__item one-whole lap-one-half">
+  <h1 class="title delta">Recent Posts</h1>
+  <ul class="divided">
+    
+      <li class="post">
+        <a href="/blog/2014/01/29/phpunit-testing-static-calls/">PHPUnit: Testing static calls</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/12/20/phpunit-testing-the-constructor/">PHPUnit: Testing The Constructor</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/19/vim-for-ide-people-part-4/">VIM for IDE-people - part 4</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/08/vim-for-ide-people-part-3/">VIM for IDE-people - part 3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/24/vim-for-ide-people-part-2/">VIM for IDE-people - part 2</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section id="github-repos" class="aside-module grid__item one-whole lap-one-half">
+  <h1 class="title delta">
+    GitHub Repos
+    
+    <small class="pull-right">
+      <a class="btn" href="//github.com/miljar" title="@miljar on GitHub" target="_blank">
+        <i class="icon-external-link"></i>
+      </a>
+    </small>
+    
+  </h1>
+  <ul id="gh_repos" class="divided">
+    <li class="loading">
+      <i class="icon-spinner icon-spin"></i>
+    </li>
+  </ul>
+</section>
+
+
+
+
+</div>
+
+        </aside>
+        
+      </div>
+    </div>
+    
+    <footer>
+      <div class="grid-wrapper">
+  <div class="grid">
+    <div class="grid__item">
+      <p class="copyright">
+  All content by Tom Van Herreweghe and licenced under <a href="//creativecommons.org/licenses/by-nc-sa/3.0/ie/">Creative Commons</a>.<br>
+  Code under <a href="//github.com/coogie/oscailte/blob/master/README.md">MIT Licence</a>.
+</p>
+    </div>
+  </div>
+</div>
+
+    </footer>
+
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="//crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
+<script defer src="/javascripts/octopress.js"></script>
+
+
+
+
+<script>
+  var disqus_shortname = 'miljar';
+  
+    
+    // var disqus_developer = 1;
+    var disqus_identifier = 'http://miljar.github.io/blog/2014/01/29/phpunit-testing-static-calls/';
+    var disqus_url = 'http://miljar.github.io/blog/2014/01/29/phpunit-testing-static-calls/';
+    var disqus_script = 'embed.js';
+  
+  (function () {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  }());
+</script>
+
+
+
+
+<script>
+  $(document).ready(function(){
+    if (!window.jXHR){
+      var jxhr = document.createElement('script');
+      jxhr.type = 'text/javascript';
+      jxhr.src = '/javascripts/libs/jXHR.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jxhr, s);
+    }
+
+    github.showRepos({
+      user: 'Miljar',
+      count: 0,
+      skip_forks: true,
+      target: '#gh_repos'
+    });
+  });
+</script>
+<script src="/javascripts/github.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
