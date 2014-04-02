@@ -8,14 +8,14 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Vim For IDE-people - Miljar - Tom Van Herreweghe</title>
+    <title>VIM for IDE people - part 5 - Miljar - Tom Van Herreweghe</title>
     <meta name="author" content="Tom Van Herreweghe">
     
-    <meta name="description" content="Vim for IDE-people Why? There are people who are die-hard Vim users. They&rsquo;re the ones trying to convince you most other editors are bad, and &hellip;">
+    <meta name="description" content="VIM for IDE people - part 5 02 April 2014 21:05:00 vim macvim Lightweight status line: vim-airline When editing a file in a plain vanilla VIM &hellip;">
     
     <meta name="viewport" content="width=device-width">
     
-    <link rel="canonical" href="http://miljar.github.io/vim-for-ide-people">
+    <link rel="canonical" href="http://miljar.github.io/blog/2014/04/02/vim-for-ide-people-part-5">
     <link href="/favicon.png" rel="icon">
     <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet">
     <link href="//atom.xml" rel="alternate" title="Miljar - Tom Van Herreweghe" type="application/atom+xml">
@@ -57,24 +57,100 @@
         <div class="grid__item two-thirds lap-one-whole palm-one-whole">
         
 
-          
-<h1 class="title indent">
-  Vim for IDE-people
-</h1>
-<hr class="divider">
+          <article class="post">
+  <header>
+  
+  <h1 class="title indent">VIM for IDE people - part 5</h1>
+  
+
+  
+  <div class="meta clearfix">
+    
 
 
-<h1>Why?</h1>
 
-<p>There are people who are die-hard Vim users. They&rsquo;re the ones trying to convince you most other editors are bad, and Vim&rsquo;s not. I&rsquo;m not one of these people.</p>
 
-<p>For close to a decade, I have done all my PHP (and other) development in <a href="https://netbeans.org/">Netbeans</a> and I was quite happy with it. Until more recently my demands became bigger than what Netbeans could deliver. It had to work faster, crash less, be more configurable. It just couldn&rsquo;t deliver anymore. For me.</p>
 
-<p>That&rsquo;s why I started looking at Vim. I had heard the group of Vim die-hards described above. Now it was time to see if Vim could deliver. Since a lot of people have tried switching to Vim, and not all have stuck with it, I decided to keep a record of things I did for setting up Vim the way I like it. The list below is the result of that journey.</p>
 
-<p>If you&rsquo;re in a situation like me, then I hope these articles can provide you with the information you need to start working with Vim the way you like it.</p>
 
-<h1>List of articles</h1>
+
+  
+
+
+<time class="pull-left" datetime="2014-04-02T21:05:00+00:00" pubdate data-updated="true"><i class="icon-calendar"></i> 02 April 2014 21:05:00</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/vim/">vim</a></li>
+    
+      <li><a href="/blog/categories/macvim/">macvim</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+  </div>
+  
+</header>
+
+
+
+
+  <h1>Lightweight status line: vim-airline</h1>
+
+<p>When editing a file in a plain vanilla VIM instance (simulate this by opening VIM like this: <code>vim -u NORC [file]</code>), there&rsquo;s not much to see. In fact, there is no information at all about the file you&rsquo;re editing, except maybe the filename in the window title bar.</p>
+
+<p><img class="center" src="/images/2014-04-02/plain-vim.png" title="Plain vanilla VIM" ></p>
+
+<p>Maybe that&rsquo;s good enough for you. But what if you could have this:</p>
+
+<ul>
+<li>Indication of the mode (insert/replace/visual/&hellip;)</li>
+<li>Filename</li>
+<li>File type</li>
+<li>File encoding</li>
+<li>Line &amp; column number</li>
+<li>Git information</li>
+<li>Info/error/warning messages</li>
+<li>&hellip;</li>
+</ul>
+
+
+<p>If you&rsquo;re thinking &ldquo;ow yes, that sounds usefull&rdquo;, then the next part <a href="http://www.d-e-f-i-n-i-t-e-l-y.com/">definitely</a> is for you.</p>
+
+<h2>What is vim-airline?</h2>
+
+<p>Some clever people thought the above sounded like a usefull idea and went ahead and created a plugin for this. The mother of status line implementations is <a href="https://github.com/Lokaltog/vim-powerline">vim-powerline</a>. This project however, is deprecated in favor of <a href="https://github.com/Lokaltog/powerline">powerline</a>.</p>
+
+<p>Powerline is a complete rewrite of the original vim-powerline in Python. If you don&rsquo;t like Python or are more partial to using VimL, then there&rsquo;s <a href="https://github.com/bling/vim-airline">vim-airline</a> for you.</p>
+
+<p>Vim-airline is a lightweight clone of Powerline, writen in <a href="http://learnvimscriptthehardway.stevelosh.com/">VimL</a>, which has support for color schemes, is completely extendible, has integration for other tools and much much more. Go look at the website if you want the full list.</p>
+
+<p>After installation of vim-airline (see <a href="https://github.com/bling/vim-airline#installation">installation instructions</a>), see the help tags (<code>:help airline</code>) for all the configuration options. The ones I used are:</p>
+
+<ul>
+<li><code>let g:airline_theme='solarized'</code> For the solarized theme</li>
+<li><code>set laststatus=2</code> To always display airline (default is only after a split)</li>
+</ul>
+
+
+<p>That&rsquo;s right, only 2 configuration options. I&rsquo;m happy with the default behavior. Try it out, there&rsquo;s nothing to dislike really&hellip;</p>
+
+<p><img class="center" src="/images/2014-04-02/vim-airline.png" title="Vim Airline" ></p>
+
+<!-- more -->
+
+
+<h1>Vim For IDE-people</h1>
+
+<p>This article is part of the series &ldquo;Vim For IDE-people&rdquo;. The other articles in the list are:</p>
 
 <ol>
 <li><a href="http://miljar.github.io/blog/2013/09/18/vim-for-ide-people-part-1/">Basic Vim configuration and plugins</a></li>
@@ -85,9 +161,15 @@
 </ol>
 
 
-<p><strong>Disclaimer</strong>
-<em>This is not a rant against Netbeans, nor is the purpose of this page to try and convince you to use Vim.</em></p>
 
+</article>
+
+ 
+<section id="disqus">
+  <h1 class="indent title">Comments</h1>
+  <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
 
         
         </div>
@@ -206,8 +288,8 @@
   
     
     // var disqus_developer = 1;
-    var disqus_identifier = 'http://miljar.github.io/vim-for-ide-people/index.html';
-    var disqus_url = 'http://miljar.github.io/vim-for-ide-people/index.html';
+    var disqus_identifier = 'http://miljar.github.io/blog/2014/04/02/vim-for-ide-people-part-5/';
+    var disqus_url = 'http://miljar.github.io/blog/2014/04/02/vim-for-ide-people-part-5/';
     var disqus_script = 'embed.js';
   
   (function () {
