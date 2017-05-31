@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: 
-
-Sitemap: http://miljar.github.io/sitemap.xml 
